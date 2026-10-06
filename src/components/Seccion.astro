@@ -1,0 +1,22 @@
+---
+interface Props {
+  id: string;
+  antetitulo: string;
+  titulo: string;
+  fondo?: 'niebla' | 'blanco';
+}
+
+const { id, antetitulo, titulo, fondo = 'niebla' } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-titulo`} class:list={['scroll-mt-20', fondo === 'blanco' ? 'bg-white' : 'bg-niebla']}>
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+    <p class="text-xs font-semibold tracking-[0.2em] text-bosque uppercase">{antetitulo}</p>
+    <h2 id={`${id}-titulo`} class="mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl">
+      {titulo}
+    </h2>
+    <div class="mt-6 text-lg leading-relaxed text-tinta/85 [&>p]:max-w-3xl">
+      <slot />
+    </div>
+  </div>
+</section>

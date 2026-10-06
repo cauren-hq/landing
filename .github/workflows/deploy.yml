@@ -1,0 +1,64 @@
+# Verifica la landing en cada PR y la publica en GitHub Pages con cada push a `main`.
+# Requiere Pages con origen «GitHub Actions» y el dominio cauren.app (ver README.md).
+name: Landing
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: landing-${{ github.ref }}
+  # Solo se cancelan los PR: un despliegue a Pages en curso nunca se interrumpe.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Habilitar pnpm
+        run: corepack enable
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+      - name: Verificar tipos
+        run: pnpm typecheck
+      - name: Build
+        run: pnpm build
+      - name: Verificar el build
+        run: pnpm verify
+      - name: Subir el sitio como artefacto de Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    name: Publicar en GitHub Pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Publicar
+        id: despliegue
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import Inicio, { frontmatter } from '../content/inicio.mdx';
+---
+
+<Base title={frontmatter.title} description={frontmatter.description}>
+  <Inicio />
+</Base>

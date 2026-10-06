@@ -1,0 +1,9 @@
+# Dependencias y salidas de build
+node_modules/
+dist/
+.astro/
+
+# Entorno local
+.env
+.env.*
+.DS_Store

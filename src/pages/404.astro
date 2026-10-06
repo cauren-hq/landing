@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import Simbolo from '../components/Simbolo.astro';
+---
+
+<Base title="Página no encontrada · Cauren" description="La página que buscás no existe o cambió de dirección." noindex>
+  <section aria-labelledby="no-encontrada" class="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:px-6">
+    <Simbolo class="h-16 w-16" />
+    <p class="mt-6 text-xs font-semibold tracking-[0.2em] text-bosque uppercase">Error 404</p>
+    <h1 id="no-encontrada" class="mt-3 text-3xl font-bold tracking-tight text-pino sm:text-4xl">No encontramos esta página</h1>
+    <p class="mt-4 text-lg text-tinta/80">Puede que la dirección esté mal escrita o que la página ya no exista.</p>
+    <a href="/" class="mt-8 rounded-full bg-pino px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-bosque">
+      Volver al inicio
+    </a>
+  </section>
+</Base>

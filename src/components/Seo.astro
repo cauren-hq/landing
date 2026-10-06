@@ -1,0 +1,69 @@
+---
+// Metadatos de cada página: canonical, OpenGraph, Twitter y datos estructurados (JSON-LD).
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+
+if (!Astro.site) {
+  throw new Error('Falta `site` en astro.config.mjs: las URL canónicas deben ser absolutas.');
+}
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imagen = new URL('/og.png', Astro.site).href;
+const inicio = new URL('/', Astro.site).href;
+
+const datosEstructurados = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${inicio}#organizacion`,
+      name: 'Cauren',
+      url: inicio,
+      logo: new URL('/icono-512.png', Astro.site).href,
+      email: 'info@cauren.app',
+      slogan: 'Conectá tus cobros. Ordená tu negocio.',
+      areaServed: { '@type': 'Country', name: 'Argentina' },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${inicio}#sitio`,
+      name: 'Cauren',
+      url: inicio,
+      inLanguage: 'es-AR',
+      publisher: { '@id': `${inicio}#organizacion` },
+    },
+  ],
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="theme-color" content="#0E3B2A" />
+
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="es_AR" />
+<meta property="og:site_name" content="Cauren" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imagen} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Cauren. Conectá tus cobros. Ordená tu negocio." />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imagen} />
+
+<script type="application/ld+json" set:html={JSON.stringify(datosEstructurados)} />

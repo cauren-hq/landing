@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import Seo from '../components/Seo.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex } = Astro.props;
+const correo = 'info@cauren.app';
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Seo title={title} description={description} noindex={noindex} />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-pino"
+    >
+      Ir al contenido
+    </a>
+
+    <header class="border-b border-salvia bg-niebla/90 backdrop-blur supports-[backdrop-filter]:bg-niebla/75 sticky top-0 z-40">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+        <a href="/" aria-label="Cauren, inicio" class="rounded-md">
+          <Logo />
+        </a>
+        <nav aria-label="Principal" class="flex items-center gap-1 sm:gap-6">
+          <a href="/#como-funciona" class="hidden rounded-md px-2 py-1 text-sm font-medium text-tinta/80 hover:text-bosque sm:inline">
+            Cómo funciona
+          </a>
+          <a href="/#que-incluye" class="hidden rounded-md px-2 py-1 text-sm font-medium text-tinta/80 hover:text-bosque sm:inline">
+            Qué incluye
+          </a>
+          <a
+            href={`mailto:${correo}`}
+            class="rounded-full bg-pino px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-bosque"
+          >
+            Escribinos
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenido" class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="bg-pino text-white">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div class="flex flex-col gap-2">
+          <Logo version="negativa" />
+          <p class="text-sm text-white/75">Conectá tus cobros. Ordená tu negocio.</p>
+        </div>
+        <div class="flex flex-col gap-1 text-sm text-white/75 sm:items-end">
+          <a href={`mailto:${correo}`} class="font-semibold text-white underline-offset-4 hover:underline">{correo}</a>
+          <p>© Cauren. Hecho en Argentina.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

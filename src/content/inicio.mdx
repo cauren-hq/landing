@@ -1,0 +1,92 @@
+---
+title: 'Cauren · Conciliación de cobros para empresas argentinas'
+description: 'Cauren cruza tus ventas y cuotas con las transferencias que recibís en Mercado Pago y tus cobros en efectivo, te explica cada coincidencia y mantiene tus saldos al día.'
+---
+
+import Portada from '../components/Portada.astro';
+import Seccion from '../components/Seccion.astro';
+import Pasos from '../components/Pasos.astro';
+import Paso from '../components/Paso.astro';
+import Tarjetas from '../components/Tarjetas.astro';
+import Tarjeta from '../components/Tarjeta.astro';
+import Contacto from '../components/Contacto.astro';
+
+export const correo = 'info@cauren.app';
+
+<Portada antetitulo="Conciliación de cobros para empresas argentinas" titulo="Conectá tus cobros. Ordená tu negocio." correo={correo}>
+
+Cauren cruza lo que tenés que cobrar con el dinero que realmente entra. Cuando un pago coincide con una venta, te lo sugiere y te explica por qué. Vos confirmás; Cauren lleva los saldos y el historial.
+
+</Portada>
+
+<Seccion id="problema" antetitulo="El problema" titulo="Cobrar no es lo difícil. Saber qué se cobró, sí." fondo="blanco">
+
+Las transferencias llegan sin referencia, los pagos se parten en cuotas, los comprobantes aparecen por cualquier lado y la planilla siempre queda atrasada. A fin de mes, nadie sabe con certeza quién pagó qué ni cuánto falta cobrar.
+
+</Seccion>
+
+<Seccion id="como-funciona" antetitulo="Cómo funciona" titulo="De lo esperado a lo cobrado, en cuatro pasos">
+
+<Pasos>
+  <Paso numero={1} titulo="Cargá lo que esperás cobrar">
+    Registrá tus ventas, quiénes participan en cada una y, si querés, un cronograma de cuotas.
+  </Paso>
+  <Paso numero={2} titulo="Incorporá lo que entra">
+    Cauren incorpora las transferencias que recibís en tu cuenta de Mercado Pago y vos registrás los cobros en efectivo.
+  </Paso>
+  <Paso numero={3} titulo="Revisá las coincidencias">
+    Cuando encuentra una coincidencia, Cauren te propone la venta que corresponde y te muestra en qué se basa: referencia, importe, fecha o cliente. Si no la encuentra, la asignás vos.
+  </Paso>
+  <Paso numero={4} titulo="Confirmá y seguí">
+    Nada se asigna sin tu confirmación. Los saldos pendientes se actualizan solos y cada decisión queda registrada.
+  </Paso>
+</Pasos>
+
+</Seccion>
+
+<Seccion id="que-incluye" antetitulo="Qué incluye" titulo="Lo necesario para ordenar tus cobros" fondo="blanco">
+
+<Tarjetas>
+  <Tarjeta titulo="Mercado Pago">
+    Conectás tu cuenta y Cauren incorpora las transferencias que recibís, sin duplicarlas.
+  </Tarjeta>
+  <Tarjeta titulo="Cobros en efectivo">
+    Registrás cada cobro en efectivo con su folio para que también entre en la conciliación.
+  </Tarjeta>
+  <Tarjeta titulo="Cuotas y saldos">
+    Cuotas por persona, pagos parciales o anticipados y lo que falta cobrar, siempre a la vista.
+  </Tarjeta>
+  <Tarjeta titulo="Comprobantes">
+    Tus clientes suben el comprobante desde un enlace. Queda como evidencia; la confirmación sigue siendo tuya.
+  </Tarjeta>
+  <Tarjeta titulo="Coincidencias explicadas">
+    Cada sugerencia indica su nivel de confianza y los criterios que la respaldan.
+  </Tarjeta>
+  <Tarjeta titulo="Equipo y auditoría">
+    Roles para administración, operación y contaduría, ingreso con verificación en dos pasos e historial de cada cambio.
+  </Tarjeta>
+</Tarjetas>
+
+</Seccion>
+
+<Seccion id="para-quien" antetitulo="Para quién" titulo="Pensado para quienes cobran todos los días">
+
+<Tarjetas>
+  <Tarjeta titulo="Emprendedores">
+    Que venden en cuotas o reciben transferencias de muchos clientes a la vez.
+  </Tarjeta>
+  <Tarjeta titulo="Profesionales">
+    Que cobran honorarios y necesitan saber qué está pago y qué no.
+  </Tarjeta>
+  <Tarjeta titulo="Educadores">
+    Que cobran cuotas mensuales, matrículas o viajes y quieren dejar atrás la planilla.
+  </Tarjeta>
+</Tarjetas>
+
+</Seccion>
+
+<Contacto titulo="Sumate a la etapa piloto" correo={correo}>
+
+Estamos trabajando con un grupo reducido de organizaciones. Contanos cómo cobrás hoy y vemos juntos si Cauren te sirve.
+
+</Contacto>

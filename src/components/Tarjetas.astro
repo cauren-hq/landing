@@ -1,0 +1,12 @@
+---
+// Grilla de tarjetas; cada hijo es una <Tarjeta>.
+interface Props {
+  columnas?: 2 | 3;
+}
+
+const { columnas = 3 } = Astro.props;
+---
+
+<ul role="list" class:list={['mt-10 grid list-none gap-6 p-0 sm:grid-cols-2', columnas === 3 && 'lg:grid-cols-3']}>
+  <slot />
+</ul>
