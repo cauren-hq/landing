@@ -1,0 +1,40 @@
+---
+// Tarjetas de dolor que describen el problema que resuelve Cauren.
+const dolores = [
+  {
+    titulo: 'Transferencias sin referencia',
+    descripcion: 'El dinero llega, pero no dice de quién es ni a qué venta corresponde.',
+  },
+  {
+    titulo: 'Comprobantes por cualquier lado',
+    descripcion: 'Te llegan capturas, PDF y fotos, cada uno por un lado. Y ninguna cuadra con la planilla.',
+  },
+  {
+    titulo: 'La planilla siempre atrasada',
+    descripcion: 'Actualizar el Excel lleva horas. Y cuando lo terminás, ya llegaron más pagos.',
+  },
+];
+---
+
+<section id="problema" aria-labelledby="problema-titulo" class="scroll-mt-20 bg-white">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+    <p class="revelar text-xs font-semibold tracking-[0.2em] text-bosque uppercase">El problema</p>
+    <h2 id="problema-titulo" class="revelar mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl">
+      Cobrar no es lo difícil.<br />Saber qué se cobró, sí.
+    </h2>
+
+    <ul role="list" class="mt-10 grid list-none gap-6 p-0 sm:grid-cols-3">
+      {dolores.map((dolor) => (
+        <li class="revelar elevar flex flex-col gap-3 rounded-2xl border border-salvia bg-niebla p-6">
+          <span class="h-1.5 w-10 rounded-full bg-brote" aria-hidden="true"></span>
+          <h3 class="text-lg font-semibold text-pino">{dolor.titulo}</h3>
+          <p class="m-0 text-base leading-relaxed text-tinta/80">{dolor.descripcion}</p>
+        </li>
+      ))}
+    </ul>
+
+    <p class="revelar mt-10 max-w-2xl text-xl font-semibold text-pino">
+      A fin de mes, nadie sabe con certeza quién pagó qué ni cuánto falta cobrar.
+    </p>
+  </div>
+</section>

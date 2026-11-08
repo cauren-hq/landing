@@ -1,0 +1,87 @@
+---
+// Ejemplo simple basado en el modelo de ventas del MVP. Los datos son ficticios.
+const ars = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
+const $ = (n: number) => ars.format(n);
+
+const personas = [
+  {
+    nombre: 'Persona A',
+    cuotas: [
+      { nombre: 'Cuota 1', vence: '13/09', importe: 50000, cubierto: 50000 },
+      { nombre: 'Cuota 2', vence: '13/10', importe: 50000, cubierto: 10000 },
+    ],
+  },
+  {
+    nombre: 'Persona B',
+    cuotas: [{ nombre: 'Cuota 1', vence: '13/09', importe: 70000, cubierto: 0 }],
+  },
+].map((p) => ({
+  ...p,
+  saldo: p.cuotas.reduce((suma, c) => suma + c.importe - c.cubierto, 0),
+}));
+
+const total = personas.reduce((suma, p) => suma + p.cuotas.reduce((s, c) => s + c.importe, 0), 0);
+const saldo = personas.reduce((suma, p) => suma + p.saldo, 0);
+---
+
+<section id="ejemplo" aria-labelledby="ejemplo-titulo" class="scroll-mt-20 bg-white">
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:gap-16">
+    <div class="revelar-izq">
+      <p class="text-xs font-semibold tracking-[0.2em] text-bosque uppercase">Un ejemplo</p>
+      <h2 id="ejemplo-titulo" class="mt-3 text-3xl font-bold tracking-tight text-pino sm:text-4xl">
+        Un pago, varias cuotas, cada saldo en su lugar
+      </h2>
+      <p class="mt-6 max-w-lg text-lg leading-relaxed text-tinta/85">
+        Una venta de {$(total)} se divide entre dos personas, cada una con su propio cronograma. Entra una transferencia de {$(60000)} y quien administra confirma que corresponde a la Persona A.
+      </p>
+      <p class="mt-4 max-w-lg text-lg leading-relaxed text-tinta/85">
+        Cauren aplica el pago primero a la cuota más antigua y deja a cada persona con su saldo. Lo que debe la Persona B no se toca.
+      </p>
+    </div>
+
+    <figure class="revelar-der m-0">
+      <div class="rounded-3xl border border-salvia bg-niebla p-5 sm:p-6">
+        <div class="flex items-baseline justify-between gap-3">
+          <p class="m-0 text-sm font-semibold text-pino">Venta de {$(total)}</p>
+          <p class="m-0 text-sm text-tinta/75">Saldo pendiente <strong class="text-pino">{$(saldo)}</strong></p>
+        </div>
+
+        {
+          personas.map((persona) => (
+            <div class="mt-5">
+              <div class="flex items-baseline justify-between gap-3 border-b border-salvia pb-2">
+                <h3 class="m-0 text-base font-semibold text-pino">{persona.nombre}</h3>
+                <p class="m-0 text-sm text-tinta/75">
+                  Saldo <strong class="text-pino">{$(persona.saldo)}</strong>
+                </p>
+              </div>
+              <ul role="list" class="m-0 list-none p-0">
+                {persona.cuotas.map((cuota) => (
+                  <li class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-salvia py-2 text-sm last:border-b-0">
+                    <span class="text-tinta">
+                      {cuota.nombre} <span class="text-tinta/70">· vence {cuota.vence}</span>
+                    </span>
+                    <span class="text-right">
+                      <span class="block font-semibold whitespace-nowrap text-pino">{$(cuota.importe)}</span>
+                      <span class="block text-xs text-tinta/75">
+                        {cuota.cubierto === 0
+                          ? 'Sin pagos'
+                          : cuota.cubierto === cuota.importe
+                            ? 'Cubierta'
+                            : `Cubierto ${$(cuota.cubierto)}`}
+                      </span>
+                    </span>
+                    <span class="block h-1.5 basis-full overflow-hidden rounded-full bg-salvia" aria-hidden="true">
+                      <span class="barra block h-full rounded-full bg-brote" style={`width: ${(cuota.cubierto / cuota.importe) * 100}%`}></span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <figcaption class="mt-3 text-xs text-tinta/75">Ejemplo ilustrativo con datos ficticios.</figcaption>
+    </figure>
+  </div>
+</section>
