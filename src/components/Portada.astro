@@ -1,6 +1,4 @@
 ---
-import EjemploConciliacion from './EjemploConciliacion.astro';
-
 interface Props {
   antetitulo: string;
   titulo: string;
@@ -8,11 +6,46 @@ interface Props {
 }
 
 const { antetitulo, titulo, correo } = Astro.props;
+
+// Líneas de «flujo» del fondo: ondas que se desplazan despacio, en verdes de la marca.
+// Cada onda repite su patrón cada 1200 unidades y mide 2400 de ancho, así el desplazamiento
+// de -50% enlaza sin saltos. `amp` es cuánto sube y baja; `t` es la duración de una pasada.
+const ondas = [
+  { top: 14, alto: 32, color: '#1F7A45', op: 0.16, ancho: 1.5, amp: 90, t: 55, inv: false },
+  { top: 30, alto: 36, color: '#6FCF4F', op: 0.4, ancho: 2, amp: 70, t: 42, inv: true },
+  { top: 44, alto: 34, color: '#DCE8DC', op: 1, ancho: 3, amp: 80, t: 80, inv: false },
+  { top: 58, alto: 32, color: '#1F7A45', op: 0.12, ancho: 1.5, amp: 100, t: 68, inv: true },
+  { top: 68, alto: 30, color: '#6FCF4F', op: 0.28, ancho: 2, amp: 60, t: 50, inv: false },
+];
+const trazo = (amp: number) => `M0 100 Q300 ${100 - amp} 600 100 T1200 100 T1800 100 T2400 100`;
 ---
 
-<section aria-labelledby="portada-titulo" class="bg-niebla">
-  <div class="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-[1.1fr_1fr]">
-    <div>
+<section aria-labelledby="portada-titulo" class="relative overflow-hidden bg-niebla">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    {
+      ondas.map((onda) => (
+        <svg
+          viewBox="0 0 2400 200"
+          preserveAspectRatio="none"
+          focusable="false"
+          class:list={['fluir absolute left-0 w-[200%]', onda.inv && 'fluir-inv']}
+          style={`top: ${onda.top}%; height: ${onda.alto}%; --t: ${onda.t}s`}
+        >
+          <path
+            d={trazo(onda.amp)}
+            fill="none"
+            stroke={onda.color}
+            stroke-opacity={onda.op}
+            stroke-width={onda.ancho}
+            stroke-linecap="round"
+            vector-effect="non-scaling-stroke"
+          />
+        </svg>
+      ))
+    }
+  </div>
+  <div class="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:min-h-[85vh] lg:grid-cols-[1.1fr_1fr] lg:py-32">
+    <div class="entrada">
       <p class="text-xs font-semibold tracking-[0.2em] text-bosque uppercase">{antetitulo}</p>
       <h1 id="portada-titulo" class="mt-4 text-4xl leading-[1.1] font-bold tracking-tight text-pino sm:text-5xl lg:text-6xl">
         {titulo}
@@ -25,7 +58,7 @@ const { antetitulo, titulo, correo } = Astro.props;
           href={`mailto:${correo}`}
           class="rounded-full bg-pino px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-bosque"
         >
-          Escribinos
+          Sumate a la etapa piloto
         </a>
         <a
           href="#como-funciona"
@@ -35,8 +68,20 @@ const { antetitulo, titulo, correo } = Astro.props;
         </a>
       </div>
     </div>
-    <div class="flex justify-center lg:justify-end">
-      <EjemploConciliacion />
+    <div class="entrada entrada-2 flex justify-center lg:justify-end">
+      <div class="relative w-full max-w-xl">
+        <div class="absolute -inset-4 rounded-3xl bg-pino/5 blur-2xl" aria-hidden="true"></div>
+        <img
+          src="/app/coincidencias.png"
+          alt="Coincidencias para revisar en Cauren: la transferencia de Claudia Ríos sugerida para la cuota 3 de Martina, con confianza alta, y la de Raúl Benítez para Sofía, con confianza media. Cada una muestra el porqué y el botón Confirmar."
+          width="676"
+          height="457"
+          class="flotar relative rounded-2xl border border-salvia shadow-[0_24px_60px_-20px_rgba(14,59,42,0.35)]"
+          loading="eager"
+          decoding="async"
+        />
+        <p class="relative mt-3 text-xs text-tinta/75">Prototipo de diseño, con datos de ejemplo.</p>
+      </div>
     </div>
   </div>
 </section>

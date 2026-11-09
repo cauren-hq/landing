@@ -5,7 +5,8 @@ Este repositorio es público y contiene solo la landing de `cauren.app`. El prod
 ## Idioma y voz
 
 - Todo el texto, la documentación y los commits van en español, con terminología del contexto argentino.
-- La voz es clara, directa y cercana, con voseo rioplatense y frases breves. El lema vigente es «Conectá tus cobros. Ordená tu negocio.».
+- La voz sigue la guía de marca de `cauren-hq/cauren`: clara, cercana, tranquila y precisa, con voseo rioplatense y frases breves. Personas antes que números, nunca culpar a quien debe y decir lo que Cauren no hace. El lema vigente es «Cuentas claras con quien te paga.».
+- Sin jerga del producto en el texto visible: «conciliación» va solo en los metadatos para buscadores; tampoco «evidencia», «nivel de confianza», «folio» ni «Persona A». Los ejemplos usan nombres ficticios y van rotulados.
 - En la prosa, los importes y las cantidades usan punto para los miles y coma para los decimales («ARS 80.000»). En la interfaz, un importe se muestra como en la aplicación: `Intl.NumberFormat('es-AR', { style: 'currency', currency })`, por ejemplo «$ 80.000,00», con espacio de no separación.
 
 ## Marca

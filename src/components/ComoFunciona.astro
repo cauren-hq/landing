@@ -1,0 +1,80 @@
+---
+import EjemploConciliacion from './EjemploConciliacion.astro';
+
+// Sección "Cómo funciona" con pasos visuales alternados: texto + imagen.
+const pasos = [
+  {
+    numero: 1,
+    titulo: 'Anotá a quién le cobrás',
+    descripcion: 'Cargás el viaje, la cuota o el servicio, a quién le cobrás y quién paga por cada uno. Si es en cuotas, también las fechas.',
+    imagen: '/app/venta-detalle.png',
+    ancho: 380,
+    alto: 386,
+    alt: 'Viaje a Mar del Plata de Benjamín Herrera en Cauren: total, cobrado y cada cuota con su fecha, su importe y su estado.',
+  },
+  {
+    numero: 2,
+    titulo: 'Conectá tu Mercado Pago',
+    descripcion: 'Cauren ve las transferencias que entran a tu cuenta, vengan del banco o la billetera que sea. El efectivo lo anotás vos.',
+    imagen: '/app/cobros-tabla.png',
+    ancho: 1112,
+    alto: 378,
+    alt: 'Lista de cobros en Cauren: transferencias de Mercado Pago de cada familia y un cobro en efectivo, con su referencia, su importe y su estado.',
+  },
+  {
+    numero: 3,
+    titulo: 'Confirmá de quién es cada pago',
+    descripcion: 'Cauren te dice de quién cree que es cada transferencia y por qué. Vos lo confirmás, y sabés quién está al día y a quién le falta. Si no está seguro, te lo dice y lo asignás vos.',
+    usarMockup: true,
+  },
+];
+---
+
+<section id="como-funciona" aria-labelledby="como-funciona-titulo" class="scroll-mt-20 bg-niebla">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+    <p class="revelar text-xs font-semibold tracking-[0.2em] text-bosque uppercase">Cómo funciona</p>
+    <h2 id="como-funciona-titulo" class="revelar mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl">
+      Tres pasos, y sabés de quién es cada pago
+    </h2>
+
+    <ol role="list" class="mt-12 list-none space-y-16 p-0 lg:space-y-24">
+      {pasos.map((paso, index) => (
+        <li class:list={[
+          'grid items-center gap-8 lg:gap-12',
+          (paso.ancho ?? 0) > 700 ? 'lg:grid-cols-1' : 'lg:grid-cols-2',
+          (paso.ancho ?? 0) <= 700 && index % 2 !== 0 && 'lg:[direction:rtl] lg:[&>*]:[direction:ltr]',
+        ]}>
+          <div class="revelar-izq">
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-pino text-base font-bold text-white" aria-hidden="true">
+              {paso.numero}
+            </span>
+            <h3 class="mt-4 text-2xl font-bold text-pino">
+              <span class="sr-only">Paso {paso.numero}: </span>{paso.titulo}
+            </h3>
+            <p class="m-0 mt-3 max-w-lg text-lg leading-relaxed text-tinta/85">
+              {paso.descripcion}
+            </p>
+          </div>
+          <div class="revelar-der flex justify-center">
+            {paso.usarMockup ? (
+              <EjemploConciliacion />
+            ) : (
+              <div class="relative overflow-hidden rounded-xl motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:hover:z-10 motion-safe:hover:scale-[1.04] border border-salvia shadow-[0_12px_40px_-16px_rgba(14,59,42,0.25)]">
+                <img
+                  src={paso.imagen}
+                  alt={paso.alt}
+                  width={paso.ancho}
+                  height={paso.alto}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-auto w-full"
+                />
+              </div>
+            )}
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-10 text-sm text-tinta/75">Capturas del prototipo de diseño, con datos de ejemplo.</p>
+  </div>
+</section>

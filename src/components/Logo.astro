@@ -6,13 +6,14 @@ import Simbolo from './Simbolo.astro';
 interface Props {
   version?: 'positiva' | 'negativa';
   class?: string;
+  animado?: boolean;
 }
 
-const { version = 'positiva', class: className } = Astro.props;
+const { version = 'positiva', class: className, animado = false } = Astro.props;
 const colorTexto = version === 'positiva' ? 'text-pino' : 'text-white';
 ---
 
-<span class:list={['inline-flex items-center gap-2.5', className]}>
+<span class:list={['inline-flex items-center gap-2.5', animado && 'logo-animado', className]}>
   <Simbolo version={version} class="h-8 w-8 shrink-0" />
   <span class:list={['text-xl font-semibold tracking-[0.14em]', colorTexto]}>CAUREN</span>
 </span>

@@ -1,88 +1,101 @@
 ---
-title: 'Cauren · Conciliación de cobros para empresas argentinas'
-description: 'Cauren cruza tus ventas y cuotas con las transferencias que recibís en Mercado Pago y tus cobros en efectivo, te explica cada coincidencia y mantiene tus saldos al día.'
+title: 'Cauren · Cuentas claras con quien te paga'
+description: 'Cauren te muestra de quién es cada transferencia que entra a tu Mercado Pago y por qué. Vos confirmás y sabés a quién le falta. Conciliación de cobros para emprendedores, profesionales y educadores.'
 ---
 
 import Portada from '../components/Portada.astro';
 import Seccion from '../components/Seccion.astro';
-import Pasos from '../components/Pasos.astro';
-import Paso from '../components/Paso.astro';
+import Problema from '../components/Problema.astro';
+import ComoFunciona from '../components/ComoFunciona.astro';
+import EjemploCuotas from '../components/EjemploCuotas.astro';
+import DemoVisual from '../components/DemoVisual.astro';
 import Tarjetas from '../components/Tarjetas.astro';
 import Tarjeta from '../components/Tarjeta.astro';
+import Preguntas from '../components/Preguntas.astro';
 import Contacto from '../components/Contacto.astro';
 
 export const correo = 'info@cauren.app';
 
-<Portada antetitulo="Conciliación de cobros para empresas argentinas" titulo="Conectá tus cobros. Ordená tu negocio." correo={correo}>
+<Portada antetitulo="Para emprendedores, profesionales y educadores" titulo="Cuentas claras con quien te paga." correo={correo}>
 
-Cauren cruza lo que tenés que cobrar con el dinero que realmente entra. Cuando un pago coincide con una venta, te lo sugiere y te explica por qué. Vos confirmás; Cauren lleva los saldos y el historial.
+Le cobrás a muchos por transferencia. Cauren te muestra de quién es cada pago que entra a tu Mercado Pago, y vos lo confirmás.
 
 </Portada>
 
-<Seccion id="problema" antetitulo="El problema" titulo="Cobrar no es lo difícil. Saber qué se cobró, sí." fondo="blanco">
+<Problema />
 
-Las transferencias llegan sin referencia, los pagos se parten en cuotas, los comprobantes aparecen por cualquier lado y la planilla siempre queda atrasada. A fin de mes, nadie sabe con certeza quién pagó qué ni cuánto falta cobrar.
+<ComoFunciona />
 
-</Seccion>
+<EjemploCuotas />
 
-<Seccion id="como-funciona" antetitulo="Cómo funciona" titulo="De lo esperado a lo cobrado, en cuatro pasos">
+<Seccion id="que-cambia" antetitulo="Qué cambia" titulo="Menos vueltas para saber quién pagó">
 
-<Pasos>
-  <Paso numero={1} titulo="Cargá lo que esperás cobrar">
-    Registrá tus ventas, quiénes participan en cada una y, si querés, un cronograma de cuotas.
-  </Paso>
-  <Paso numero={2} titulo="Incorporá lo que entra">
-    Cauren incorpora las transferencias que recibís en tu cuenta de Mercado Pago y vos registrás los cobros en efectivo.
-  </Paso>
-  <Paso numero={3} titulo="Revisá las coincidencias">
-    Cuando encuentra una coincidencia, Cauren te propone la venta que corresponde y te muestra en qué se basa: referencia, importe, fecha o cliente. Si no la encuentra, la asignás vos.
-  </Paso>
-  <Paso numero={4} titulo="Confirmá y seguí">
-    Nada se asigna sin tu confirmación. Los saldos pendientes se actualizan solos y cada decisión queda registrada.
-  </Paso>
-</Pasos>
-
-</Seccion>
-
-<Seccion id="que-incluye" antetitulo="Qué incluye" titulo="Lo necesario para ordenar tus cobros" fondo="blanco">
-
-<Tarjetas>
-  <Tarjeta titulo="Mercado Pago">
-    Conectás tu cuenta y Cauren incorpora las transferencias que recibís, sin duplicarlas.
+<Tarjetas columnas={2}>
+  <Tarjeta titulo="No esperás el comprobante">
+    Lo que entra a tu Mercado Pago lo ves en Cauren, aunque nadie te haya mandado nada.
   </Tarjeta>
-  <Tarjeta titulo="Cobros en efectivo">
-    Registrás cada cobro en efectivo con su folio para que también entre en la conciliación.
+  <Tarjeta titulo="Todo en un lugar">
+    Lo que te pagaron, quién lo pagó y lo que falta, juntos. No repartido entre la planilla, los chats y la billetera.
   </Tarjeta>
-  <Tarjeta titulo="Cuotas y saldos">
-    Cuotas por persona, pagos parciales o anticipados y lo que falta cobrar, siempre a la vista.
+  <Tarjeta titulo="Los comprobantes, guardados">
+    Las familias o tus clientes los suben desde un link y quedan en Cauren, no en un chat que se puede borrar.
   </Tarjeta>
-  <Tarjeta titulo="Comprobantes">
-    Tus clientes suben el comprobante desde un enlace. Queda como evidencia; la confirmación sigue siendo tuya.
-  </Tarjeta>
-  <Tarjeta titulo="Coincidencias explicadas">
-    Cada sugerencia indica su nivel de confianza y los criterios que la respaldan.
-    <span class="mt-3 block text-sm text-tinta/75">Próximamente: IA que sugiere y extrae; vos confirmás.</span>
-  </Tarjeta>
-  <Tarjeta titulo="Equipo y auditoría">
-    Roles para administración, operación y contaduría, ingreso con verificación en dos pasos e historial de cada cambio.
+  <Tarjeta titulo="Llegás a la fecha sabiendo">
+    Ves quién está al día y a quién le falta antes de que llegue el viaje, la matrícula o el fin de mes.
   </Tarjeta>
 </Tarjetas>
 
 </Seccion>
 
-<Seccion id="para-quien" antetitulo="Para quién" titulo="Pensado para quienes cobran todos los días">
+<DemoVisual />
 
-<Tarjetas>
-  <Tarjeta titulo="Emprendedores">
-    Que venden en cuotas o reciben transferencias de muchos clientes a la vez.
+<Seccion id="tu-plata" antetitulo="Tu plata" titulo="Tu plata sigue siendo tuya" fondo="blanco">
+
+<Tarjetas columnas={2}>
+  <Tarjeta titulo="No toca tu plata">
+    Queda en tu cuenta. Cauren solo ve qué transferencias entraron.
+  </Tarjeta>
+  <Tarjeta titulo="No cobra por vos">
+    No es una billetera ni un medio de pago. Te siguen pagando como siempre.
+  </Tarjeta>
+  <Tarjeta titulo="No le reclama a nadie">
+    Te muestra a quién le falta. Cómo y cuándo se lo decís sigue siendo cosa tuya.
+  </Tarjeta>
+  <Tarjeta titulo="No ve tu saldo">
+    No muestra cuánta plata tenés en tus cuentas: solo las transferencias que te entran.
+  </Tarjeta>
+</Tarjetas>
+
+</Seccion>
+
+<Preguntas />
+
+<Seccion id="para-quien" antetitulo="Para quién" titulo="Para quienes les cobran a muchos por transferencia" fondo="blanco">
+
+<Tarjetas columnas={2}>
+  <Tarjeta titulo="Agencias de viajes de clubes">
+    Que cobran el viaje en cuotas a decenas de familias.
+  </Tarjeta>
+  <Tarjeta titulo="Escuelas deportivas">
+    Que cobran la cuota del mes a los padres de cada chico.
   </Tarjeta>
   <Tarjeta titulo="Profesionales">
-    Que cobran honorarios y necesitan saber qué está pago y qué no.
+    Que cobran honorarios por transferencia y necesitan saber qué está pago.
   </Tarjeta>
   <Tarjeta titulo="Educadores">
-    Que cobran cuotas mensuales, matrículas o viajes y quieren dejar atrás la planilla.
+    Que cobran cuotas, matrículas o talleres a alumnos y familias.
   </Tarjeta>
 </Tarjetas>
+
+<div class="revelar mt-10 max-w-3xl rounded-2xl border border-salvia bg-niebla p-6">
+  <h3 class="text-lg font-semibold text-pino">Te sirve si…</h3>
+  <ul role="list" class="mt-3 list-disc space-y-2 pl-5 text-base">
+    <li>les cobrás a personas que conocés, no a público de mostrador;</li>
+    <li>te transfieren, o te pueden transferir, a tu cuenta de Mercado Pago, desde cualquier banco o billetera;</li>
+    <li>muchas personas te pagan por lo mismo: un viaje, una cuota, un curso;</li>
+    <li>a veces no paga quien viaja o estudia, sino su mamá, su papá o su pareja.</li>
+  </ul>
+</div>
 
 </Seccion>
 

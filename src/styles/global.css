@@ -32,3 +32,207 @@
     @apply outline-2 outline-offset-2 outline-bosque;
   }
 }
+
+/* Movimiento. Todo vive dentro de `no-preference`: con «reducir movimiento» o sin soporte, el contenido se ve estático. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes entrada {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+  }
+
+  /* Entrada de la portada al cargar */
+  .entrada {
+    animation: entrada 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .entrada-2 {
+    animation-delay: 150ms;
+  }
+
+  /* Logo del encabezado: entra girando y se asienta; al pasar el mouse se repite esa entrada.
+     Es una rotación y escala uniformes: el símbolo no se deforma y termina siempre en su forma original. */
+  @keyframes logo-entrada {
+    from {
+      opacity: 0;
+      transform: rotate(-140deg) scale(0.5);
+    }
+    65% {
+      opacity: 1;
+      transform: rotate(10deg) scale(1.08);
+    }
+  }
+
+  @keyframes logo-brote {
+    from {
+      opacity: 0;
+      transform: translateX(-16px);
+    }
+  }
+
+  .logo-animado .simbolo {
+    overflow: visible;
+  }
+
+  .logo-animado .simbolo-g {
+    transform-box: view-box;
+    transform-origin: 60px 60px;
+    animation: logo-entrada 1000ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+
+  .logo-animado .simbolo-brote {
+    animation: logo-brote 500ms ease-out 650ms backwards;
+  }
+
+  /* Al pasar el mouse se repite la animación de carga. Va en otros elementos (el <svg> y el <g> de la banda)
+     para que al sacar el mouse no se vuelva a disparar la de carga. */
+  .logo-animado:hover .simbolo {
+    animation: logo-entrada 1000ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .logo-animado:hover .simbolo-b {
+    animation: logo-brote 500ms ease-out 650ms backwards;
+  }
+
+  /* Fondo de la portada: ondas que fluyen despacio, como una brisa o un río */
+  @keyframes fluir {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .fluir {
+    animation: fluir var(--t, 60s) linear infinite;
+  }
+
+  .fluir-inv {
+    animation-direction: reverse;
+  }
+
+  /* Tarjetas que se elevan al pasar el mouse */
+  .elevar {
+    transition:
+      transform 250ms ease,
+      box-shadow 250ms ease;
+  }
+
+  .elevar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px -16px rgba(14, 59, 42, 0.3);
+  }
+
+  /* Animaciones atadas al scroll (navegadores con soporte) */
+  @supports (animation-timeline: view()) {
+    @keyframes revelar {
+      from {
+        opacity: 0;
+        transform: translateY(2rem);
+      }
+    }
+
+    @keyframes revelar-izquierda {
+      from {
+        opacity: 0;
+        transform: translateX(-2rem);
+      }
+    }
+
+    @keyframes revelar-derecha {
+      from {
+        opacity: 0;
+        transform: translateX(2rem);
+      }
+    }
+
+    @keyframes revelar-zoom {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+    }
+
+    @keyframes barra {
+      from {
+        transform: scaleX(0);
+      }
+    }
+
+    @keyframes flotar {
+      from {
+        transform: translateY(2rem);
+      }
+      to {
+        transform: translateY(-2rem);
+      }
+    }
+
+    .revelar,
+    .revelar-izq,
+    .revelar-der,
+    .revelar-zoom {
+      animation-timing-function: linear;
+      animation-fill-mode: backwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+
+    .revelar {
+      animation-name: revelar;
+    }
+
+    .revelar-izq {
+      animation-name: revelar-izquierda;
+    }
+
+    .revelar-der {
+      animation-name: revelar-derecha;
+    }
+
+    .revelar-zoom {
+      animation-name: revelar-zoom;
+    }
+
+    /* Logo de la sección de demo: la misma entrada, pero atada al scroll */
+    .logo-scroll .simbolo-g {
+      animation: logo-entrada linear backwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+
+    .logo-scroll .simbolo-brote {
+      animation: logo-brote linear backwards;
+      animation-timeline: view();
+      animation-range: entry 40% entry 100%;
+    }
+
+    /* Barras de progreso que se llenan al entrar en pantalla */
+    .barra {
+      transform-origin: left;
+      animation: barra linear both;
+      animation-timeline: view();
+      animation-range: entry 20% entry 90%;
+    }
+
+    /* La imagen de la portada se desplaza a distinto ritmo que la página */
+    .flotar {
+      animation: flotar linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+
+  /* Barra de avance de lectura, fija arriba */
+  @supports (animation-timeline: scroll()) {
+    .progreso {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      height: 3px;
+      transform-origin: left;
+      background: var(--color-brote);
+      animation: barra linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
