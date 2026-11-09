@@ -2,6 +2,9 @@
 {
   "name": "landing",
   "compatibility_date": "2026-11-01",
+  // Sin estas URL el Worker queda en «No URLs enabled» y las vistas previas no tienen dónde publicarse.
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
