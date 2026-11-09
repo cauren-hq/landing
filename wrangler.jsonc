@@ -5,5 +5,7 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
-  }
+  },
+  // Requerido por `wrangler preview`; vacío porque las vistas previas usan la configuración de arriba.
+  "previews": {}
 }
