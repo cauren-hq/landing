@@ -11,11 +11,32 @@
   --color-tinta: #13201a; /* Texto */
 
   --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Texto con transparencia normalizado (DESIGN.md, «Texto con transparencia»). */
+  --color-texto-cuerpo: #13201ad9; /* Tinta al 85 %: cuerpo de párrafos y tarjetas */
+  --color-texto-secundario: #4a5a52; /* Sólido: pies, ayuda, detalle de mockups, notas */
+  --color-texto-sobre-pino: #ffffffd9; /* Blanco al 85 %: cuerpo sobre Pino */
+  --color-texto-sobre-pino-secundario: #ffffffbf; /* Blanco al 75 %: texto menor sobre Pino */
+  --color-borde-sobre-pino: #ffffff80; /* Borde del botón secundario sobre Pino */
+  --color-hover-sobre-pino: #ffffff1a; /* Hover del botón secundario sobre Pino */
+  --color-borde-boton-secundario: #0e3b2a40; /* Pino al 25 %: decorativo, el texto identifica el botón */
+  --color-niebla-encabezado: #f4f7f3e6; /* Niebla al 90 %: encabezado desplazado */
+
+  /* Tres sombras y una variante sobre Pino. */
+  --shadow-sutil: 0 8px 24px -18px rgba(14, 59, 42, 0.35);
+  --shadow-media: 0 12px 40px -16px rgba(14, 59, 42, 0.28);
+  --shadow-alta: 0 24px 60px -24px rgba(14, 59, 42, 0.4);
+  --shadow-alta-sobre-pino: 0 24px 60px -24px rgba(0, 0, 0, 0.5);
+
+  /* Interletrado único de los antetítulos. */
+  --tracking-eyebrow: 0.18em;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Encabezado fijo (≈ 80 px) + 16 px: ni las anclas ni el foco quedan tapados. Un solo mecanismo: sin scroll-mt. */
+    scroll-padding-top: 96px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -24,16 +45,249 @@
     }
   }
 
+  :root {
+    /* Color del foco: una sola variable. Bosque sobre claro; Brote dentro de las bandas Pino (Bosque no se ve: 2,3:1). */
+    --foco: var(--color-bosque);
+  }
+
+  .fondo-pino {
+    --foco: var(--color-brote);
+  }
+
   body {
     @apply bg-niebla font-sans text-tinta antialiased;
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-bosque;
+    outline: 3px solid var(--foco);
+    outline-offset: 2px;
   }
 }
 
-/* Movimiento. Todo vive dentro de `no-preference`: con «reducir movimiento» o sin soporte, el contenido se ve estático. */
+@layer components {
+  .antetitulo {
+    @apply text-xs font-semibold tracking-eyebrow text-bosque uppercase;
+  }
+
+  .antetitulo-sobre-pino {
+    @apply text-xs font-semibold tracking-eyebrow text-salvia uppercase;
+  }
+
+  /* Ilustra un botón de la aplicación dentro de un mockup: sin relleno Pino, para que no parezca el real. */
+  .pseudoboton {
+    @apply cursor-default rounded-full border border-bosque bg-transparent px-4 py-1.5 text-sm font-semibold text-pino select-none;
+    pointer-events: none;
+  }
+
+  .etiqueta-de-motivo {
+    @apply rounded-full border border-salvia bg-niebla px-3 py-1 text-sm font-medium text-texto-secundario;
+  }
+
+  /* Píldoras de estado con las variantes de la guía de marca. */
+  .pildora {
+    @apply inline-block rounded-full px-3 py-0.5 text-sm font-medium whitespace-nowrap;
+  }
+
+  .pildora-positiva {
+    @apply bg-salvia text-pino;
+  }
+
+  .pildora-neutra {
+    @apply border border-salvia bg-niebla text-tinta;
+  }
+
+  .pildora-pendiente {
+    @apply border border-dashed border-texto-secundario text-texto-secundario;
+  }
+
+  /* Columna que acompaña la lectura: solo con ancho de escritorio y 620 px de alto o más; si no, se apila. */
+  @media (min-width: 1024px) and (min-height: 620px) {
+    .columna-fija {
+      position: sticky;
+      top: 7rem;
+      align-self: start;
+    }
+  }
+
+  /* Acordeón: chevron propio (3:1) que gira solo con movimiento permitido. */
+  .acordeon > summary {
+    list-style: none;
+  }
+
+  .acordeon > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .acordeon[open] > summary .chevron {
+    transform: rotate(180deg);
+  }
+}
+
+/* Control de pausa y ejemplos con chips. Van fuera de `@layer` a propósito: tienen que ganarle a las utilidades
+   de Tailwind (`inline-block`, `inline-flex`, `grid`) que llevan los mismos elementos. */
+/* Control de pausa: casilla nativa fuera de pantalla al comienzo del documento (segundo foco) y etiqueta visible en la portada. */
+.pausa-foco {
+  display: none;
+}
+
+#pausa:focus-visible + .pausa-foco {
+  display: block;
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 50;
+  border-radius: 0.375rem;
+  background: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-pino);
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+#pausa:checked + .pausa-foco::before {
+  content: '✓ ' / '';
+}
+
+.pausa-caja {
+  display: inline-flex;
+  height: 1.25rem;
+  width: 1.25rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-bosque);
+  border-radius: 0.375rem;
+  background: #fff;
+  font-size: 0.875rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--color-pino);
+}
+
+#pausa:checked ~ main .pausa-caja::after {
+  content: '✓' / '';
+}
+
+#pausa:focus-visible ~ main .pausa-etiqueta {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+  border-radius: 0.375rem;
+}
+
+/* Con «reducir movimiento» no hay nada que pausar: el control no se muestra ni recibe foco. */
+@media (prefers-reduced-motion: reduce) {
+  #pausa,
+  .pausa-etiqueta {
+    display: none;
+  }
+}
+
+/* Ejemplo con chips de rubro: grupo de radios, sin JavaScript. Base (también quieto: «reducir movimiento» o pausa):
+   se ve el primer ejemplo, o el elegido, y «Cambian solos» no se muestra porque nada cambia solo. */
+.rotor {
+  display: grid;
+}
+
+.rotor-item {
+  display: none;
+}
+
+.rotor-item:first-child {
+  display: grid;
+}
+
+.rotor-barra,
+.rotor-ayuda-auto,
+.rotor-ayuda-vuelta {
+  display: none;
+}
+
+.rotor-chip {
+  position: relative;
+  cursor: pointer;
+  background-color: #fff;
+  border-color: var(--color-bosque);
+  color: var(--color-pino);
+}
+
+.rotor-chip:hover {
+  background-color: var(--color-niebla);
+}
+
+/* Elegido: Pino, texto blanco y ✓ (decorativo). Sin rubro elegido, el primero figura elegido. */
+.rotor-zona:not(:has(.rotor-radio:checked)) .rotor-chip[data-primero],
+.rotor-chip:has(.rotor-radio:checked),
+.rotor-chip:has(.rotor-radio-auto:checked) {
+  background-color: var(--color-pino);
+  border-color: var(--color-pino);
+  color: #fff;
+}
+
+.rotor-zona:not(:has(.rotor-radio:checked)) .rotor-chip[data-primero]::before,
+.rotor-chip:has(.rotor-radio:checked)::before,
+.rotor-chip:has(.rotor-radio-auto:checked)::before {
+  content: '✓ ' / '';
+}
+
+.rotor-zona:has(.rotor-radio:checked) .rotor-item {
+  display: none;
+}
+
+.rotor-zona:has(#rotor-r0:checked) .rotor-item:nth-child(1),
+.rotor-zona:has(#rotor-r1:checked) .rotor-item:nth-child(2),
+.rotor-zona:has(#rotor-r2:checked) .rotor-item:nth-child(3),
+.rotor-zona:has(#rotor-r3:checked) .rotor-item:nth-child(4) {
+  display: grid;
+}
+
+.rotor-chip:has(input:focus-visible) {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotor-chip-auto {
+    display: none;
+  }
+}
+
+#pausa:checked ~ main .rotor-chip-auto {
+  display: none;
+}
+
+/* Sin :has() no hay chips ni ayuda: se ve el primer ejemplo y nada más. */
+@supports not selector(:has(*)) {
+  .rotor-nav,
+  .rotor-ayuda {
+    display: none;
+  }
+}
+
+/* Colores forzados: el chip elegido se distingue por su ✓ y un borde de 3 px, no por el relleno. */
+@media (forced-colors: active) {
+  .rotor-zona:not(:has(.rotor-radio:checked)) .rotor-chip[data-primero],
+  .rotor-chip:has(.rotor-radio:checked),
+  .rotor-chip:has(.rotor-radio-auto:checked) {
+    forced-color-adjust: none;
+    border: 3px solid CanvasText;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  .barra-de-cuota {
+    border: 1px solid CanvasText;
+  }
+
+  :focus-visible,
+  .rotor-chip:has(input:focus-visible) {
+    outline-color: Highlight;
+  }
+}
+
+/* Movimiento. Todo vive dentro de `no-preference` y detrás de `#pausa:not(:checked) ~ …`: con «reducir movimiento»,
+ con «Pausar animaciones» marcado o sin soporte, el contenido se ve quieto y completo. */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes entrada {
     from {
@@ -42,17 +296,6 @@
     }
   }
 
-  /* Entrada de la portada al cargar */
-  .entrada {
-    animation: entrada 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  }
-
-  .entrada-2 {
-    animation-delay: 150ms;
-  }
-
-  /* Logo del encabezado: entra girando y se asienta; al pasar el mouse se repite esa entrada.
-     Es una rotación y escala uniformes: el símbolo no se deforma y termina siempre en su forma original. */
   @keyframes logo-entrada {
     from {
       opacity: 0;
@@ -71,55 +314,207 @@
     }
   }
 
-  .logo-animado .simbolo {
-    overflow: visible;
-  }
-
-  .logo-animado .simbolo-g {
-    transform-box: view-box;
-    transform-origin: 60px 60px;
-    animation: logo-entrada 1000ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
-  }
-
-  .logo-animado .simbolo-brote {
-    animation: logo-brote 500ms ease-out 650ms backwards;
-  }
-
-  /* Al pasar el mouse se repite la animación de carga. Va en otros elementos (el <svg> y el <g> de la banda)
-     para que al sacar el mouse no se vuelva a disparar la de carga. */
-  .logo-animado:hover .simbolo {
-    animation: logo-entrada 1000ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .logo-animado:hover .simbolo-b {
-    animation: logo-brote 500ms ease-out 650ms backwards;
-  }
-
-  /* Fondo de la portada: ondas que fluyen despacio, como una brisa o un río */
   @keyframes fluir {
     to {
       transform: translateX(-50%);
     }
   }
 
-  .fluir {
-    animation: fluir var(--t, 60s) linear infinite;
+  /* Ejemplos que rotan solos mientras «Cambian solos» está elegido: 20 s cada uno (ciclo de 80 s). Fundido corto
+     solo de entrada (0,3 s); al terminar su turno el ejemplo se oculta de golpe y el siguiente entra. No hay pausa
+     por hover ni foco: congelar la animación a mitad del fundido dejaría texto semitransparente. El visible es el
+     único que no está oculto, así que un lector de pantalla lee uno por vez. */
+  @keyframes rotor {
+    0% {
+      opacity: 0;
+      visibility: visible;
+    }
+    0.4%,
+    25% {
+      opacity: 1;
+      visibility: visible;
+    }
+    25.01%,
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
   }
 
-  .fluir-inv {
-    animation-direction: reverse;
+  /* Chip «en pantalla»: Salvia con texto Pino mientras su ejemplo está visible. Se pinta con una sombra interior
+     para que el hover (fondo Niebla) siga funcionando en los demás chips. */
+  @keyframes rotor-chip {
+    0%,
+    25% {
+      box-shadow: inset 0 0 0 2rem var(--color-salvia);
+    }
+    25.01%,
+    100% {
+      box-shadow: none;
+    }
   }
 
-  /* Tarjetas que se elevan al pasar el mouse */
-  .elevar {
-    transition:
-      transform 250ms ease,
-      box-shadow 250ms ease;
+  @keyframes rotor-barra {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
   }
 
-  .elevar:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 32px -16px rgba(14, 59, 42, 0.3);
+  /* Rotación de ejemplos: solo con soporte de :has(), para que sin él se vea el primer ejemplo y nada más. */
+  @supports selector(:has(*)) {
+    #pausa:not(:checked) ~ * {
+      .rotor-item {
+        display: grid;
+        grid-area: 1 / 1;
+        opacity: 0;
+        visibility: hidden;
+        animation: rotor 80s linear infinite;
+        animation-delay: calc(var(--i) * 20s);
+      }
+
+      .rotor-chip:not(.rotor-chip-auto) {
+        animation: rotor-chip 80s linear infinite;
+        animation-delay: calc(var(--i) * 20s);
+      }
+
+      /* En rotación ningún chip de rubro figura elegido: el primero vuelve a su reposo. */
+      .rotor-zona:not(:has(.rotor-radio:checked)) .rotor-chip[data-primero] {
+        background-color: #fff;
+        border-color: var(--color-bosque);
+        color: var(--color-pino);
+      }
+
+      .rotor-zona:not(:has(.rotor-radio:checked)) .rotor-chip[data-primero]:hover {
+        background-color: var(--color-niebla);
+      }
+
+      .rotor-zona:not(:has(.rotor-radio:checked)) .rotor-chip[data-primero]::before {
+        content: none;
+      }
+
+      /* Indicador de progreso: línea de 3 px en la base de «Cambian solos»; se llena en 20 s y reinicia con cada ejemplo. */
+      .rotor-chip:has(.rotor-radio-auto:checked) .rotor-barra {
+        display: block;
+        position: absolute;
+        inset: auto 1rem 3px;
+        height: 3px;
+        overflow: hidden;
+        border-radius: 9999px;
+      }
+
+      .rotor-barra::after {
+        content: '';
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--color-brote);
+        transform-origin: left;
+        animation: rotor-barra 20s linear infinite;
+      }
+
+      /* Con un rubro elegido, la rotación se detiene y queda ese ejemplo; «Cambian solos» la reanuda. */
+      .rotor-zona:has(.rotor-radio:checked) .rotor-item {
+        animation: none;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .rotor-zona:has(#rotor-r0:checked) .rotor-item:nth-child(1),
+      .rotor-zona:has(#rotor-r1:checked) .rotor-item:nth-child(2),
+      .rotor-zona:has(#rotor-r2:checked) .rotor-item:nth-child(3),
+      .rotor-zona:has(#rotor-r3:checked) .rotor-item:nth-child(4) {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .rotor-zona:has(.rotor-radio:checked) .rotor-chip {
+        animation: none;
+      }
+
+      .rotor-zona:has(.rotor-radio-auto:checked) .rotor-ayuda-auto,
+      .rotor-zona:has(.rotor-radio:checked) .rotor-ayuda-vuelta {
+        display: inline;
+      }
+
+      .rotor-zona:has(.rotor-radio-auto:checked) .rotor-ayuda-fija,
+      .rotor-zona:has(.rotor-radio:checked) .rotor-ayuda-fija {
+        display: none;
+      }
+    }
+  }
+
+  #pausa:not(:checked) ~ * {
+    /* Entrada de la portada al cargar */
+    .entrada {
+      animation: entrada 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    .entrada-2 {
+      animation-delay: 150ms;
+    }
+
+    /* Logo del encabezado: entra girando y se asienta; al pasar el mouse se repite esa entrada.
+       Es una rotación y escala uniformes: el símbolo no se deforma y termina siempre en su forma original. */
+    .logo-animado .simbolo {
+      overflow: visible;
+    }
+
+    .logo-animado .simbolo-g {
+      transform-box: view-box;
+      transform-origin: 60px 60px;
+      animation: logo-entrada 1000ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+    }
+
+    .logo-animado .simbolo-brote {
+      animation: logo-brote 500ms ease-out 650ms backwards;
+    }
+
+    /* Al pasar el mouse se repite la animación de carga. Va en otros elementos (el <svg> y el <g> de la banda)
+       para que al sacar el mouse no se vuelva a disparar la de carga. */
+    .logo-animado:hover .simbolo {
+      animation: logo-entrada 1000ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .logo-animado:hover .simbolo-b {
+      animation: logo-brote 500ms ease-out 650ms backwards;
+    }
+
+    /* Fondo de la portada: ondas que fluyen despacio, como una brisa o un río */
+    .fluir {
+      animation: fluir var(--t, 60s) linear infinite;
+    }
+
+    .fluir-inv {
+      animation-direction: reverse;
+    }
+
+    /* Tarjetas que se elevan al pasar el mouse; mockups que escalan */
+    .elevar {
+      transition:
+        transform 250ms ease,
+        box-shadow 250ms ease;
+    }
+
+    .elevar:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-media);
+    }
+
+    .escala-hover {
+      transition: transform 500ms ease-out;
+    }
+
+    .escala-hover:hover {
+      z-index: 10;
+      transform: scale(1.03);
+    }
+
+    .acordeon .chevron {
+      transition: transform 250ms ease;
+    }
   }
 
   /* Animaciones atadas al scroll (navegadores con soporte) */
@@ -167,71 +562,125 @@
       }
     }
 
-    .revelar,
-    .revelar-izq,
-    .revelar-der,
-    .revelar-zoom {
-      animation-timing-function: linear;
-      animation-fill-mode: backwards;
-      animation-timeline: view();
-      animation-range: entry 0% entry 40%;
-    }
+    #pausa:not(:checked) ~ * {
+      .revelar,
+      .revelar-izq,
+      .revelar-der,
+      .revelar-zoom {
+        animation-timing-function: linear;
+        animation-fill-mode: backwards;
+        animation-timeline: view();
+        animation-range: entry 0% entry 40%;
+      }
 
-    .revelar {
-      animation-name: revelar;
-    }
+      .revelar {
+        animation-name: revelar;
+      }
 
-    .revelar-izq {
-      animation-name: revelar-izquierda;
-    }
+      .revelar-izq {
+        animation-name: revelar-izquierda;
+      }
 
-    .revelar-der {
-      animation-name: revelar-derecha;
-    }
+      .revelar-der {
+        animation-name: revelar-derecha;
+      }
 
-    .revelar-zoom {
-      animation-name: revelar-zoom;
-    }
+      .revelar-zoom {
+        animation-name: revelar-zoom;
+      }
 
-    /* Logo de la sección de demo: la misma entrada, pero atada al scroll */
-    .logo-scroll .simbolo-g {
-      animation: logo-entrada linear backwards;
-      animation-timeline: view();
-      animation-range: entry 0% entry 100%;
-    }
+      /* Logo de la sección de demo: la misma entrada, pero atada al scroll */
+      .logo-scroll .simbolo-g {
+        animation-name: logo-entrada;
+        animation-timing-function: linear;
+        animation-fill-mode: backwards;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+      }
 
-    .logo-scroll .simbolo-brote {
-      animation: logo-brote linear backwards;
-      animation-timeline: view();
-      animation-range: entry 40% entry 100%;
-    }
+      .logo-scroll .simbolo-brote {
+        animation-name: logo-brote;
+        animation-timing-function: linear;
+        animation-fill-mode: backwards;
+        animation-timeline: view();
+        animation-range: entry 40% entry 100%;
+      }
 
-    /* Barras de progreso que se llenan al entrar en pantalla */
-    .barra {
-      transform-origin: left;
-      animation: barra linear both;
-      animation-timeline: view();
-      animation-range: entry 20% entry 90%;
-    }
+      /* Barras de progreso que se llenan al entrar en pantalla */
+      .barra {
+        transform-origin: left;
+        animation-name: barra;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 20% entry 90%;
+      }
 
-    /* La imagen de la portada se desplaza a distinto ritmo que la página */
-    .flotar {
-      animation: flotar linear both;
-      animation-timeline: view();
-      animation-range: cover;
+      /* La imagen de la portada se desplaza a distinto ritmo que la página */
+      .flotar {
+        animation-name: flotar;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
     }
   }
 
-  /* Barra de avance de lectura, fija arriba */
+  /* Barra de avance de lectura, fija arriba. Las animaciones atadas al scroll se declaran con propiedades separadas
+     (`animation-name`, …) y no con el atajo `animation`: al minificar, el atajo con `animation-timeline` queda inválido
+     en Chromium y la animación no corre. */
   @supports (animation-timeline: scroll()) {
-    .progreso {
+    /* Encabezado: arriba de todo se funde con la portada y el logo se ve más grande; al bajar
+       aparece la barra (fondo, borde y sombra) y el logo vuelve a su tamaño. Sin soporte, la barra
+       se ve siempre. Se escala con transform para no mover el contenido de la página. */
+    @keyframes encabezado-arriba {
+      from {
+        background-color: transparent;
+        border-bottom-color: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+      to {
+        box-shadow: var(--shadow-sutil);
+      }
+    }
+
+    @keyframes encabezado-logo {
+      from {
+        transform: scale(1.25);
+      }
+    }
+
+    #pausa:not(:checked) ~ .encabezado {
+      animation-name: encabezado-arriba;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root);
+      animation-range: 0 120px;
+    }
+
+    #pausa:not(:checked) ~ * {
+      .encabezado-logo {
+        transform-origin: left center;
+        animation-name: encabezado-logo;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 120px;
+      }
+    }
+
+    #pausa:not(:checked) ~ .progreso {
       position: fixed;
       inset: 0 0 auto 0;
       z-index: 50;
       height: 3px;
       transform-origin: left;
       background: var(--color-brote);
-      animation: barra linear both;
+      animation-name: barra;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       animation-timeline: scroll(root);
     }
   }

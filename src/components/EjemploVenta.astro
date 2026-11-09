@@ -1,0 +1,59 @@
+---
+import Estado from './Estado.astro';
+
+// Ilustración estática (paso 1): la venta cargada, a quién se le cobra, quién paga y sus cuotas. Datos ficticios.
+// Estados de cuota con el vocabulario de la aplicación: Cumplida / Parcial / Sin cumplir.
+const ars = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
+const cuotas = [
+  { numero: 1, vence: '10/09', cumplida: true },
+  { numero: 2, vence: '10/10', cumplida: true },
+  { numero: 3, vence: '10/11', cumplida: false },
+  { numero: 4, vence: '10/12', cumplida: false },
+  { numero: 5, vence: '10/01', cumplida: false },
+  { numero: 6, vence: '10/02', cumplida: false },
+];
+const importe = 35000;
+const total = importe * cuotas.length;
+const pagado = importe * cuotas.filter((c) => c.cumplida).length;
+const totales = [
+  ['Importe', total],
+  ['Pagado', pagado],
+  ['Pendiente', total - pagado],
+] as const;
+---
+
+<figure class="m-0 w-full max-w-md">
+  <div class="rounded-3xl border border-salvia bg-white p-5 shadow-alta sm:p-6">
+    <p class="antetitulo m-0">Viaje a Mar del Plata</p>
+    <p class="m-0 mt-2 text-2xl font-bold text-pino">Martina Ríos</p>
+    <p class="m-0 mt-1 text-sm text-texto-secundario">Paga: Claudia Ríos</p>
+
+    <dl class="m-0 mt-4 grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-3">
+      {
+        totales.map(([nombre, valor]) => (
+          <div>
+            <dt class="text-sm text-texto-secundario">{nombre}</dt>
+            <dd class="m-0 text-base font-bold whitespace-nowrap text-pino">{ars.format(valor)}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <ul role="list" class="m-0 mt-4 list-none border-t border-salvia p-0">
+      {
+        cuotas.map((c) => (
+          <li class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-salvia py-2 text-sm last:border-b-0">
+            <span class="text-tinta">
+              <span class="font-semibold">Cuota {c.numero}</span> <span class="text-texto-secundario">· vence {c.vence}</span>
+            </span>
+            <span class="flex items-center gap-3">
+              <span class="font-semibold whitespace-nowrap text-pino">{ars.format(importe)}</span>
+              <Estado tipo={c.cumplida ? 'positiva' : 'pendiente'}>{c.cumplida ? 'Cumplida' : 'Sin cumplir'}</Estado>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <figcaption class="mt-3 text-center text-xs text-texto-secundario">Ejemplo ilustrativo con datos ficticios.</figcaption>
+</figure>

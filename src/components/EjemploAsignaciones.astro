@@ -1,0 +1,48 @@
+---
+// Ilustración estática (Demo): asignaciones confirmadas, cada pago con la persona y la cuota. Datos ficticios.
+// Los roles ARIA se repiten a propósito: al cambiar `display` en celular, algunos navegadores pierden la semántica de tabla.
+// Sin columna de estado: la aplicación no la tiene. Bajo `sm` cada fila pasa a dos líneas con el importe a la derecha.
+const ars = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
+const filas = [
+  { quien: 'Diego Herrera', fecha: '09/10', origen: 'Efectivo', para: 'Benjamín Herrera', cuota: 2, importe: 42000 },
+  { quien: 'Claudia Ríos', fecha: '08/10', origen: 'Mercado Pago', para: 'Martina Ríos', cuota: 2, importe: 35000 },
+  { quien: 'Diego Herrera', fecha: '09/09', origen: 'Efectivo', para: 'Benjamín Herrera', cuota: 1, importe: 42000 },
+  { quien: 'Claudia Ríos', fecha: '09/09', origen: 'Mercado Pago', para: 'Martina Ríos', cuota: 1, importe: 35000 },
+];
+---
+
+<figure class="m-0">
+  <div class="rounded-3xl bg-white p-4 shadow-alta-sobre-pino sm:p-6">
+    <p id="asignaciones-titulo" class="m-0 mb-2 px-3 text-sm font-semibold text-pino">Asignaciones</p>
+    <table role="table" aria-labelledby="asignaciones-titulo" class="m-0 block w-full border-collapse text-left sm:table">
+      <thead role="rowgroup" class="sr-only sm:not-sr-only sm:table-header-group">
+        <tr role="row" class="border-b border-salvia">
+          <th role="columnheader" scope="col" class="px-3 py-2 text-sm font-medium text-texto-secundario">Pago</th>
+          <th role="columnheader" scope="col" class="px-3 py-2 text-sm font-medium text-texto-secundario">Asignado a</th>
+          <th role="columnheader" scope="col" class="px-3 py-2 text-right text-sm font-medium text-texto-secundario">Importe</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup" class="block sm:table-row-group">
+        {
+          filas.map((f) => (
+            <tr role="row" class="grid grid-cols-[1fr_auto] gap-x-3 border-b border-salvia py-3 last:border-b-0 sm:table-row">
+              <td role="cell" class="min-w-0 sm:table-cell sm:px-3 sm:py-3">
+                <span class="block text-sm font-semibold text-tinta">{f.quien}</span>
+                <span class="block text-sm text-texto-secundario">
+                  {f.fecha} · {f.origen}
+                </span>
+              </td>
+              <td role="cell" class="col-start-1 row-start-2 min-w-0 pt-1 text-sm text-tinta sm:table-cell sm:px-3 sm:py-3 sm:pt-3">
+                {f.para} · cuota {f.cuota}
+              </td>
+              <td role="cell" class="col-start-2 row-span-2 row-start-1 text-right text-sm font-bold whitespace-nowrap text-pino sm:table-cell sm:px-3 sm:py-3">
+                {ars.format(f.importe)}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <figcaption class="mt-3 text-xs text-texto-sobre-pino-secundario">Ejemplo ilustrativo con datos ficticios.</figcaption>
+</figure>

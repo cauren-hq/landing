@@ -1,49 +1,45 @@
 ---
-// Ilustración estática: de quién es un pago y por qué. Los datos son ficticios. Los importes
+// Ilustración estática (paso 3): de quién es un pago y por qué. Los datos son ficticios. Los importes
 // siguen el formato de la interfaz de Cauren: «$ 35.000,00», con espacio de no separación.
-const porque = ['El importe es el de la cuota', 'Claudia paga por Martina', 'Llegó cerca del vencimiento'];
+const porque = ['El importe es el de la cuota', 'Claudia está anotada como quien paga por Martina', 'Llegó cerca del vencimiento'];
 ---
 
 <figure class="m-0 w-full max-w-md">
-  <div class="rounded-3xl border border-salvia bg-white p-5 shadow-[0_24px_60px_-30px_rgba(14,59,42,0.45)] sm:p-6">
+  <div class="rounded-3xl border border-salvia bg-white p-5 shadow-alta sm:p-6">
     <p class="m-0 text-sm font-semibold text-pino">De quién es este pago</p>
 
-    <dl class="mt-5 grid gap-3">
+    <dl class="m-0 mt-5 grid gap-3">
       <div class="rounded-2xl bg-niebla p-4">
-        <dt class="text-xs font-semibold tracking-[0.14em] text-bosque uppercase">Entró</dt>
-        <dd class="m-0 mt-2 flex items-start justify-between gap-3">
-          <span>
+        <dt class="antetitulo">Entró</dt>
+        <dd class="m-0 mt-2 flex flex-wrap items-start justify-between gap-x-3 gap-y-1">
+          <span class="min-w-0">
             <span class="block text-sm font-semibold text-tinta">Transferencia de Claudia Ríos</span>
-            <span class="block text-sm text-tinta/70">05/11 · Mercado Pago</span>
+            <span class="block text-sm text-texto-secundario">05/11 · Mercado Pago</span>
           </span>
           <span class="text-base font-bold whitespace-nowrap text-pino">$&nbsp;35.000,00</span>
         </dd>
       </div>
       <div class="rounded-2xl bg-niebla p-4">
-        <dt class="text-xs font-semibold tracking-[0.14em] text-bosque uppercase">Es de</dt>
-        <dd class="m-0 mt-2 flex items-start justify-between gap-3">
-          <span>
+        <dt class="antetitulo">Es de</dt>
+        <dd class="m-0 mt-2 flex flex-wrap items-start justify-between gap-x-3 gap-y-1">
+          <span class="min-w-0">
             <span class="block text-sm font-semibold text-tinta">Martina · Cuota 3 de 6</span>
-            <span class="block text-sm text-tinta/70">Viaje a Mar del Plata · vence el 10/11</span>
+            <span class="block text-sm text-texto-secundario">Viaje a Mar del Plata · vence el 10/11</span>
           </span>
           <span class="text-base font-bold whitespace-nowrap text-pino">$&nbsp;35.000,00</span>
         </dd>
       </div>
     </dl>
 
-    <p class="m-0 mt-4 text-sm font-semibold text-pino">¿Por qué?</p>
-    <ul role="list" class="mt-2 flex list-none flex-wrap gap-2 p-0" aria-label="Por qué Cauren cree que el pago es de Martina">
-      {
-        porque.map((motivo) => (
-          <li class="rounded-full border border-salvia px-3 py-1 text-xs font-medium text-tinta/80">{motivo}</li>
-        ))
-      }
+    <p id="conciliacion-porque" class="m-0 mt-4 text-sm font-semibold text-pino">¿Por qué?</p>
+    <ul role="list" aria-labelledby="conciliacion-porque" class="m-0 mt-2 flex list-none flex-wrap gap-2 p-0">
+      {porque.map((motivo) => <li class="etiqueta-de-motivo">{motivo}</li>)}
     </ul>
 
-    <div class="mt-5 flex items-center justify-between gap-3 border-t border-salvia pt-4">
-      <span class="text-sm text-tinta/70">Falta que lo confirmes</span>
-      <span class="rounded-full bg-pino px-4 py-2 text-sm font-semibold text-white" aria-hidden="true">Confirmar</span>
+    <div class="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-salvia pt-4">
+      <span class="text-sm text-texto-secundario">Falta que lo confirmes</span>
+      <span class="pseudoboton" aria-hidden="true">Confirmar</span>
     </div>
   </div>
-  <figcaption class="mt-3 text-center text-xs text-tinta/75">Ejemplo ilustrativo con datos ficticios.</figcaption>
+  <figcaption class="mt-3 text-center text-xs text-texto-secundario">Ejemplo ilustrativo con datos ficticios. Los botones son ilustrativos.</figcaption>
 </figure>
