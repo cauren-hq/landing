@@ -224,6 +224,40 @@
 
   /* Barra de avance de lectura, fija arriba */
   @supports (animation-timeline: scroll()) {
+    /* Encabezado: arriba de todo se funde con la portada y el logo se ve más grande; al bajar
+       aparece la barra (fondo, borde y sombra) y el logo vuelve a su tamaño. Sin soporte, la barra
+       se ve siempre. Se escala con transform para no mover el contenido de la página. */
+    @keyframes encabezado-arriba {
+      from {
+        background-color: transparent;
+        border-bottom-color: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+      to {
+        box-shadow: 0 8px 24px -18px rgba(14, 59, 42, 0.35);
+      }
+    }
+
+    @keyframes encabezado-logo {
+      from {
+        transform: scale(1.25);
+      }
+    }
+
+    .encabezado {
+      animation: encabezado-arriba linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 120px;
+    }
+
+    .encabezado-logo {
+      transform-origin: left center;
+      animation: encabezado-logo linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 120px;
+    }
+
     .progreso {
       position: fixed;
       inset: 0 0 auto 0;
