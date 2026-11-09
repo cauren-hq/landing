@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
 import Seo from '../components/Seo.astro';
+import { correo, lanzamiento } from '../lib/correos';
 
 interface Props {
   title: string;
@@ -10,7 +11,6 @@ interface Props {
 }
 
 const { title, description, noindex } = Astro.props;
-const correo = 'info@cauren.app';
 ---
 
 <!doctype html>
@@ -21,31 +21,35 @@ const correo = 'info@cauren.app';
     <Seo title={title} description={description} noindex={noindex} />
   </head>
   <body class="flex min-h-screen flex-col">
-    <div class="progreso" aria-hidden="true"></div>
     <a
       href="#contenido"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-pino"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-pino"
     >
       Ir al contenido
     </a>
+    <!-- Control de pausa: casilla nativa, segundo elemento enfocable. Su estado se lee con el combinador de hermanos
+         (`#pausa:checked ~ …`); la etiqueta visible está en la portada. Con foco aparece sobre el encabezado. -->
+    <input type="checkbox" id="pausa" class="sr-only" />
+    <span class="pausa-foco" aria-hidden="true">Pausar animaciones</span>
+    <div class="progreso" aria-hidden="true"></div>
 
-    <header class="encabezado sticky top-0 z-40 border-b border-salvia bg-niebla/90 backdrop-blur supports-[backdrop-filter]:bg-niebla/75">
+    <header class="encabezado sticky top-0 z-40 border-b border-salvia bg-niebla-encabezado backdrop-blur">
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <a href="/" aria-label="Cauren, inicio" class="rounded-md">
           <Logo animado class="encabezado-logo h-9 sm:h-10" />
         </a>
         <nav aria-label="Principal" class="flex items-center gap-1 sm:gap-6">
-          <a href="/#como-funciona" class="hidden rounded-md px-2 py-1 text-sm font-medium text-tinta/80 hover:text-bosque sm:inline">
+          <a href="/#como-funciona" class="hidden rounded-md px-2 py-1 text-sm font-medium text-texto-secundario hover:text-bosque sm:inline">
             Cómo funciona
           </a>
-          <a href="/#preguntas" class="hidden rounded-md px-2 py-1 text-sm font-medium text-tinta/80 hover:text-bosque sm:inline">
+          <a href="/#preguntas" class="hidden rounded-md px-2 py-1 text-sm font-medium text-texto-secundario hover:text-bosque sm:inline">
             Preguntas
           </a>
           <a
-            href={`mailto:${correo}`}
+            href={lanzamiento}
             class="rounded-full bg-pino px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-bosque"
           >
-            Escribinos
+            Anotarme<span class="max-sm:sr-only"> al lanzamiento</span><span class="sr-only">, abre tu correo</span>
           </a>
         </nav>
       </div>
@@ -55,15 +59,15 @@ const correo = 'info@cauren.app';
       <slot />
     </main>
 
-    <footer class="bg-pino text-white">
+    <footer class="fondo-pino bg-pino text-white">
       <div class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div class="flex flex-col gap-2">
           <Logo version="negativa" class="h-8" />
-          <p class="text-sm text-white/75">Cuentas claras con quien te paga.</p>
+          <p class="m-0 text-sm text-texto-sobre-pino-secundario">Cuentas claras con quien te paga.</p>
         </div>
-        <div class="flex flex-col gap-1 text-sm text-white/75 sm:items-end">
-          <a href={`mailto:${correo}`} class="font-semibold text-white underline-offset-4 hover:underline">{correo}</a>
-          <p>© Cauren. Hecho en Argentina.</p>
+        <div class="flex flex-col gap-1 text-sm text-texto-sobre-pino-secundario sm:items-end">
+          <a href={`mailto:${correo}`} class="font-semibold text-white underline-offset-4 hover:underline">{correo}<span class="sr-only">, abre tu correo</span></a>
+          <p class="m-0">© Cauren. Hecho en Argentina.</p>
         </div>
       </div>
     </footer>

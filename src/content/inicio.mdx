@@ -14,11 +14,9 @@ import Tarjeta from '../components/Tarjeta.astro';
 import Preguntas from '../components/Preguntas.astro';
 import Contacto from '../components/Contacto.astro';
 
-export const correo = 'info@cauren.app';
+<Portada antetitulo="Para educadores, emprendedores y profesionales" titulo="Cuentas claras con quien te paga." insight="La plata entra sola. Saber de quién es, no.">
 
-<Portada antetitulo="Para emprendedores, profesionales y educadores" titulo="Cuentas claras con quien te paga." correo={correo}>
-
-Le cobrás a muchos por transferencia. Cauren te muestra de quién es cada pago que entra a tu Mercado Pago, y vos lo confirmás.
+Le cobrás a muchos por transferencia. Cauren te muestra de quién es cada pago que entra a tu Mercado Pago, y vos lo confirmás. <span data-borrador>Tu plata queda en tu cuenta: Cauren solo mira qué entró.</span>
 
 </Portada>
 
@@ -32,7 +30,7 @@ Le cobrás a muchos por transferencia. Cauren te muestra de quién es cada pago 
 
 <Tarjetas columnas={2}>
   <Tarjeta titulo="No esperás el comprobante">
-    Lo que entra a tu Mercado Pago lo ves en Cauren, aunque nadie te haya mandado nada.
+    <span data-borrador>Las transferencias que entran a tu Mercado Pago aparecen en Cauren cuando se sincroniza tu cuenta, sin esperar a que te manden el comprobante.</span>
   </Tarjeta>
   <Tarjeta titulo="Todo en un lugar">
     Lo que te pagaron, quién lo pagó y lo que falta, juntos. No repartido entre la planilla, los chats y la billetera.
@@ -72,35 +70,40 @@ Le cobrás a muchos por transferencia. Cauren te muestra de quién es cada pago 
 
 <Seccion id="para-quien" antetitulo="Para quién" titulo="Para quienes les cobran a muchos por transferencia" fondo="blanco">
 
-<Tarjetas columnas={2}>
-  <Tarjeta titulo="Agencias de viajes de clubes">
-    Que cobran el viaje en cuotas a decenas de familias.
-  </Tarjeta>
-  <Tarjeta titulo="Escuelas deportivas">
-    Que cobran la cuota del mes a los padres de cada chico.
-  </Tarjeta>
-  <Tarjeta titulo="Profesionales">
-    Que cobran honorarios por transferencia y necesitan saber qué está pago.
-  </Tarjeta>
-  <Tarjeta titulo="Educadores">
-    Que cobran cuotas, matrículas o talleres a alumnos y familias.
-  </Tarjeta>
-</Tarjetas>
+<div class="grid gap-6 lg:grid-cols-12 lg:gap-8">
+  <div class="lg:col-span-7 [&>ul]:mt-0">
+    <Tarjetas columnas={2}>
+      <Tarjeta titulo="Agencias de viajes de clubes">
+        Que cobran el viaje en cuotas a decenas de familias.
+      </Tarjeta>
+      <Tarjeta titulo="Escuelas deportivas">
+        Que cobran la cuota del mes a los padres de cada chico.
+      </Tarjeta>
+      <Tarjeta titulo="Profesionales">
+        Que cobran honorarios por transferencia y necesitan saber qué está pago.
+      </Tarjeta>
+      <Tarjeta titulo="Educadores">
+        Que cobran cuotas, matrículas o talleres a alumnos y familias.
+      </Tarjeta>
+    </Tarjetas>
+  </div>
 
-<div class="revelar mt-10 max-w-3xl rounded-2xl border border-salvia bg-niebla p-6">
-  <h3 class="text-lg font-semibold text-pino">Te sirve si…</h3>
-  <ul role="list" class="mt-3 list-disc space-y-2 pl-5 text-base">
-    <li>les cobrás a personas que conocés, no a público de mostrador;</li>
-    <li>te transfieren, o te pueden transferir, a tu cuenta de Mercado Pago, desde cualquier banco o billetera;</li>
-    <li>muchas personas te pagan por lo mismo: un viaje, una cuota, un curso;</li>
-    <li>a veces no paga quien viaja o estudia, sino su mamá, su papá o su pareja.</li>
-  </ul>
+  <div class="revelar h-full rounded-2xl border border-salvia bg-niebla p-6 sm:p-8 lg:col-span-5">
+    <span class="block h-1.5 w-10 rounded-full bg-brote" aria-hidden="true"></span>
+    <h3 class="mt-4 text-xl font-semibold text-pino">Te sirve si…</h3>
+    <ul role="list" class="mt-4 list-disc space-y-3 pl-5 text-base">
+      <li>les cobrás a personas que conocés, no a público de mostrador;</li>
+      <li>te transfieren, o te pueden transferir, a tu cuenta de Mercado Pago, desde cualquier banco o billetera;</li>
+      <li>muchas personas te pagan por lo mismo: un viaje, una cuota, un curso;</li>
+      <li>a veces no paga quien viaja o estudia, sino su mamá, su papá o su pareja.</li>
+    </ul>
+  </div>
 </div>
 
 </Seccion>
 
-<Contacto titulo="Sumate a la etapa piloto" correo={correo}>
+<Contacto titulo="Anotate al lanzamiento o sumate al piloto">
 
-Estamos trabajando con un grupo reducido de organizaciones. Contanos cómo cobrás hoy y vemos juntos si Cauren te sirve.
+<span data-borrador>Anotate y te contamos cómo seguimos cuando Cauren esté listo. Si querés probarlo ya, estamos armando la etapa piloto con un grupo chico: contanos cómo cobrás hoy y vemos juntos si Cauren te sirve.</span>
 
 </Contacto>

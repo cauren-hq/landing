@@ -1,97 +1,221 @@
 ---
-// Un viaje con dos pasajeros, cada uno con sus cuotas. Los datos son ficticios.
+import Estado from './Estado.astro';
+
+// Un ejemplo que rota entre cuatro rubros, solo con CSS (ver `.rotor` en global.css). Los datos son ficticios.
+// Los chips son un grupo de radios. «Cambian solos» viene marcado: los cuatro ejemplos rotan (20 s cada uno).
+// Elegir un rubro fija ese ejemplo; volver a «Cambian solos» reanuda. Con «reducir movimiento» o con «Pausar animaciones»
+// no rota: «Cambian solos» se oculta, se ve el primero y los chips permiten elegir.
 const ars = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
 const $ = (n: number) => ars.format(n);
 
-const personas = [
+type Cuota = { nombre: string; vence: string; importe: number; cubierto: number };
+type Persona = { nombre: string; cuotas: Cuota[] };
+
+type Ejemplo = { rubro: string; borrador: boolean; titulo: string; textos: string[]; personas: Persona[] };
+
+const datos: Ejemplo[] = [
   {
-    nombre: 'Thiago',
-    cuotas: [
-      { nombre: 'Cuota 1', vence: '13/09', importe: 50000, cubierto: 50000 },
-      { nombre: 'Cuota 2', vence: '13/10', importe: 50000, cubierto: 10000 },
+    rubro: 'Viaje de club',
+    borrador: false,
+    titulo: 'Viaje a Mar del Plata',
+    textos: [
+      `El viaje a Mar del Plata tiene dos pasajeros, cada uno con sus cuotas. Marcela, la mamá de Thiago, transfiere ${$(60000)} y vos confirmás que es de Thiago.`,
+      `Cauren lo anota: a Thiago se le completa la cuota 1 y le quedan ${$(40000)} de la cuota 2. Lo de Sofía sigue igual.`,
+    ],
+    personas: [
+      {
+        nombre: 'Thiago',
+        cuotas: [
+          { nombre: 'Cuota 1', vence: '13/09', importe: 50000, cubierto: 50000 },
+          { nombre: 'Cuota 2', vence: '13/10', importe: 50000, cubierto: 10000 },
+        ],
+      },
+      { nombre: 'Sofía', cuotas: [{ nombre: 'Cuota 1', vence: '13/09', importe: 70000, cubierto: 0 }] },
     ],
   },
   {
-    nombre: 'Sofía',
-    cuotas: [{ nombre: 'Cuota 1', vence: '13/09', importe: 70000, cubierto: 0 }],
+    rubro: 'Escuela deportiva',
+    borrador: true,
+    titulo: 'Escuela de fútbol infantil',
+    textos: [
+      `En la escuela de fútbol, Darío, el papá de Tomi, transfiere ${$(40000)} y vos confirmás que es de Tomi.`,
+      `A Tomi se le completa la cuota de octubre y le quedan ${$(10000)} de la de noviembre. Lo de Mateo sigue igual.`,
+    ],
+    personas: [
+      {
+        nombre: 'Tomi',
+        cuotas: [
+          { nombre: 'Cuota de octubre', vence: '10/10', importe: 25000, cubierto: 25000 },
+          { nombre: 'Cuota de noviembre', vence: '10/11', importe: 25000, cubierto: 15000 },
+        ],
+      },
+      {
+        nombre: 'Mateo',
+        cuotas: [
+          { nombre: 'Cuota de octubre', vence: '10/10', importe: 25000, cubierto: 25000 },
+          { nombre: 'Cuota de noviembre', vence: '10/11', importe: 25000, cubierto: 0 },
+        ],
+      },
+    ],
   },
-].map((p) => ({
-  ...p,
-  saldo: p.cuotas.reduce((suma, c) => suma + c.importe - c.cubierto, 0),
-}));
+  {
+    rubro: 'Talleres',
+    borrador: true,
+    titulo: 'Taller de cerámica',
+    textos: [
+      `En el taller de cerámica, Elsa, la abuela de Julieta, transfiere ${$(30000)}. Cauren te muestra que es la cuota 2 de Julieta y vos confirmás.`,
+      `Cauren anota qué cuotas pagó cada uno: a Julieta le queda la cuota 3, de ${$(30000)}. A Bruno le falta la cuota 2.`,
+    ],
+    personas: [
+      {
+        nombre: 'Julieta',
+        cuotas: [
+          { nombre: 'Cuota 1', vence: '05/10', importe: 30000, cubierto: 30000 },
+          { nombre: 'Cuota 2', vence: '05/11', importe: 30000, cubierto: 30000 },
+          { nombre: 'Cuota 3', vence: '05/12', importe: 30000, cubierto: 0 },
+        ],
+      },
+      {
+        nombre: 'Bruno',
+        cuotas: [
+          { nombre: 'Cuota 1', vence: '05/10', importe: 30000, cubierto: 30000 },
+          { nombre: 'Cuota 2', vence: '05/11', importe: 30000, cubierto: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    rubro: 'Consultorio',
+    borrador: true,
+    titulo: 'Sesiones de octubre',
+    textos: [
+      `Laura es psicóloga y le transfieren las sesiones del mes. Entran ${$(30000)} de Jorge Paz, y Cauren le muestra que es la sesión de octubre de Ana: Jorge es quien paga por ella. Laura lo confirma y listo.`,
+      'Ana queda al día. A Marcos y a Lucía les falta la sesión de octubre.',
+    ],
+    personas: [
+      { nombre: 'Ana', cuotas: [{ nombre: 'Sesión de octubre', vence: '31/10', importe: 30000, cubierto: 30000 }] },
+      { nombre: 'Marcos', cuotas: [{ nombre: 'Sesión de octubre', vence: '31/10', importe: 30000, cubierto: 0 }] },
+      { nombre: 'Lucía', cuotas: [{ nombre: 'Sesión de octubre', vence: '31/10', importe: 30000, cubierto: 0 }] },
+    ],
+  },
+];
 
-const total = personas.reduce((suma, p) => suma + p.cuotas.reduce((s, c) => s + c.importe, 0), 0);
-const saldo = personas.reduce((suma, p) => suma + p.saldo, 0);
+const ejemplos = datos.map((e) => {
+  const personas = e.personas.map((p) => ({
+    ...p,
+    saldo: p.cuotas.reduce((suma, c) => suma + c.importe - c.cubierto, 0),
+  }));
+  return {
+    ...e,
+    personas,
+    total: personas.reduce((suma, p) => suma + p.cuotas.reduce((s, c) => s + c.importe, 0), 0),
+    saldo: personas.reduce((suma, p) => suma + p.saldo, 0),
+  };
+});
 ---
 
-<section id="ejemplo" aria-labelledby="ejemplo-titulo" class="scroll-mt-20 bg-white">
-  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:gap-16">
-    <div class="revelar-izq">
-      <p class="text-xs font-semibold tracking-[0.2em] text-bosque uppercase">Un ejemplo</p>
-      <h2 id="ejemplo-titulo" class="mt-3 text-3xl font-bold tracking-tight text-pino sm:text-4xl">
-        Cuentas claras con cada pasajero
-      </h2>
-      <p class="mt-6 max-w-lg text-lg leading-relaxed text-tinta/85">
-        El viaje a Mar del Plata tiene dos pasajeros, cada uno con sus cuotas. Marcela, la mamá de Thiago, transfiere {$(60000)} y vos confirmás que es de Thiago.
-      </p>
-      <p class="mt-4 max-w-lg text-lg leading-relaxed text-tinta/85">
-        Cauren lleva la cuenta: a Thiago se le completa la cuota 1 y le quedan {$(40000)} de la cuota 2. Lo de Sofía no se toca.
-      </p>
-    </div>
+<section id="ejemplo" aria-labelledby="ejemplo-titulo" class="bg-white">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+    <p class="antetitulo revelar">Un ejemplo</p>
+    <h2 id="ejemplo-titulo" class="revelar mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl" data-borrador>
+      Cuentas claras con cada persona
+    </h2>
 
-    <figure class="revelar-der m-0">
-      <div class="rounded-3xl border border-salvia bg-niebla p-5 sm:p-6">
-        <div class="flex items-baseline justify-between gap-3">
-          <p class="m-0 text-sm font-semibold text-pino">Viaje a Mar del Plata · {$(total)}</p>
-          <p class="m-0 text-sm text-tinta/75">Falta cobrar <strong class="text-pino">{$(saldo)}</strong></p>
-        </div>
-
+    <div class="rotor-zona">
+      <fieldset class="rotor-nav m-0 mt-6 flex min-w-0 flex-wrap gap-2 border-0 p-0" aria-describedby="rotor-ayuda">
+        <legend class="sr-only">Elegí un rubro. El ejemplo aparece debajo.</legend>
+        <label class="rotor-chip rotor-chip-auto inline-block rounded-full border px-4 py-2 text-sm font-medium">
+          <input type="radio" name="rubro" id="rotor-auto" class="rotor-radio-auto sr-only" aria-controls="rotor-ejemplos" checked />
+          Cambian solos
+          <span class="rotor-barra" aria-hidden="true"></span>
+        </label>
         {
-          personas.map((persona) => (
-            <div class="mt-5">
-              <div class="flex items-baseline justify-between gap-3 border-b border-salvia pb-2">
-                <h3 class="m-0 text-base font-semibold text-pino">{persona.nombre}</h3>
-                <p class="m-0 text-sm text-tinta/75">
-                  Le queda <strong class="text-pino">{$(persona.saldo)}</strong>
-                </p>
-              </div>
-              <ul role="list" class="m-0 list-none p-0">
-                {persona.cuotas.map((cuota) => (
-                  <li class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-salvia py-2 text-sm last:border-b-0">
-                    <span class="text-tinta">
-                      {cuota.nombre} <span class="text-tinta/70">· vence {cuota.vence}</span>
-                    </span>
-                    <span class="text-right">
-                      <span class="block font-semibold whitespace-nowrap text-pino">{$(cuota.importe)}</span>
-                      <span class="block text-xs text-tinta/75">
-                        {cuota.cubierto === 0
-                          ? 'Sin pagos'
-                          : cuota.cubierto === cuota.importe
-                            ? 'Pagada'
-                            : `Pagó ${$(cuota.cubierto)}`}
-                      </span>
-                    </span>
-                    <span class="block h-1.5 basis-full overflow-hidden rounded-full bg-salvia" aria-hidden="true">
-                      <span class="barra block h-full rounded-full bg-brote" style={`width: ${(cuota.cubierto / cuota.importe) * 100}%`}></span>
-                    </span>
-                  </li>
+          ejemplos.map((e, i) => (
+            <label class="rotor-chip inline-block rounded-full border px-4 py-2 text-sm font-medium" style={`--i: ${i}`} data-primero={i === 0 || undefined}>
+              <input type="radio" name="rubro" id={`rotor-r${i}`} class="rotor-radio sr-only" aria-controls="rotor-ejemplos" />
+              {e.rubro}
+            </label>
+          ))
+        }
+      </fieldset>
+      <p id="rotor-ayuda" class="rotor-ayuda m-0 mt-3 text-sm text-texto-secundario" data-borrador>
+        <span class="rotor-ayuda-auto">Cambian solos cada 20 segundos. Elegí un rubro para detenerlos.</span>
+        <span class="rotor-ayuda-vuelta">Elegí «Cambian solos» para que vuelvan a cambiar.</span>
+        <span class="rotor-ayuda-fija">Elegí un rubro. El ejemplo aparece debajo.</span>
+      </p>
+
+      <div id="rotor-ejemplos" class="rotor mt-8 rounded-2xl" role="group" aria-label="Ejemplos de distintos rubros">
+        {
+          ejemplos.map((e, i) => (
+            <div class="rotor-item grid items-center gap-10 lg:grid-cols-2 lg:gap-16" style={`--i: ${i}`}>
+              <div>
+                <p class="antetitulo m-0">{e.rubro}</p>
+                {e.textos.map((texto) => (
+                  <p class="m-0 mt-4 max-w-lg text-lg leading-relaxed text-texto-cuerpo" data-borrador={e.borrador || undefined}>
+                    {texto}
+                  </p>
                 ))}
-              </ul>
+              </div>
+
+              <figure class="m-0 min-w-0">
+                <div class="rounded-3xl border border-salvia bg-niebla p-5 sm:p-6">
+                  <p class="m-0 text-sm font-semibold text-pino">
+                    {e.titulo} · {$(e.total)}
+                  </p>
+
+                  {e.personas.map((persona) => (
+                    <div class="mt-5">
+                      <div class="flex flex-wrap items-baseline justify-between gap-x-3 border-b border-salvia pb-2">
+                        <h3 class="m-0 text-base font-semibold text-pino">{persona.nombre}</h3>
+                        <p class="m-0 text-sm text-texto-secundario">
+                          {persona.saldo === 0 ? (
+                            <strong class="text-pino">Está al día</strong>
+                          ) : (
+                            <>
+                              Le queda <strong class="text-pino">{$(persona.saldo)}</strong>
+                            </>
+                          )}
+                        </p>
+                      </div>
+                      <ul role="list" class="m-0 list-none p-0">
+                        {persona.cuotas.map((cuota) => (
+                          <li class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-salvia py-2 text-sm last:border-b-0">
+                            <span class="text-tinta">
+                              {cuota.nombre} <span class="text-texto-secundario">· vence {cuota.vence}</span>
+                            </span>
+                            <span class="flex flex-wrap items-center justify-end gap-x-3 gap-y-1">
+                              <span class="font-semibold whitespace-nowrap text-pino">{$(cuota.importe)}</span>
+                              {cuota.cubierto > 0 && cuota.cubierto < cuota.importe && (
+                                <span class="whitespace-nowrap text-texto-secundario">Pagó {$(cuota.cubierto)}</span>
+                              )}
+                              {cuota.cubierto === 0 ? (
+                                <Estado tipo="pendiente">Sin cumplir</Estado>
+                              ) : cuota.cubierto === cuota.importe ? (
+                                <Estado tipo="positiva">Cumplida</Estado>
+                              ) : (
+                                <Estado tipo="neutra">Parcial</Estado>
+                              )}
+                            </span>
+                            <span class="barra-de-cuota block h-1.5 basis-full overflow-hidden rounded-full bg-salvia" aria-hidden="true">
+                              <span class="barra block h-full rounded-full bg-brote" style={`width: ${(cuota.cubierto / cuota.importe) * 100}%`} />
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+
+                  <p class="m-0 mt-5 flex flex-wrap items-baseline justify-between gap-x-3 border-t border-salvia pt-3 text-sm text-texto-secundario">
+                    <span>Falta cobrar</span>
+                    <strong class="text-base text-pino">{$(e.saldo)}</strong>
+                  </p>
+                </div>
+                <figcaption class="mt-3 text-xs text-texto-secundario">Ejemplo ilustrativo con datos ficticios.</figcaption>
+              </figure>
             </div>
           ))
         }
       </div>
-      <figcaption class="mt-3 text-xs text-tinta/75">Ejemplo ilustrativo con datos ficticios.</figcaption>
-    </figure>
-  </div>
-
-  <div class="mx-auto max-w-6xl px-4 pb-16 sm:px-6 sm:pb-24">
-    <figure class="revelar m-0 max-w-3xl rounded-2xl border border-salvia bg-niebla p-6">
-      <p class="m-0 text-xs font-semibold tracking-[0.14em] text-bosque uppercase">Otro ejemplo</p>
-      <p class="m-0 mt-3 text-lg leading-relaxed text-tinta/85">
-        Laura es psicóloga y le transfieren las sesiones del mes. Entran {$(30000)} de Jorge Paz, y Cauren le muestra que es la sesión de octubre de Ana: Jorge es quien paga por ella. Laura lo confirma y listo.
-      </p>
-      <figcaption class="mt-3 text-xs text-tinta/75">Ejemplo ilustrativo con datos ficticios.</figcaption>
-    </figure>
+    </div>
   </div>
 </section>

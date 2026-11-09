@@ -1,0 +1,43 @@
+---
+import Estado from './Estado.astro';
+
+// Ilustración estática (paso 2): lo que entró y cuánto queda sin asignar. Datos ficticios, angosta y con letra de 14 px o más.
+// Estados como la aplicación: «Asignable» (pago de Mercado Pago sin motivos de inelegibilidad) y «Vigente» (efectivo);
+// lo que falta asignar se dice «No asignado $ X». Importes con el formato de la interfaz («$ 35.000,00»).
+const ars = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
+const cobros = [
+  { fecha: '05/11', quien: 'Claudia Ríos', origen: 'Mercado Pago', importe: 35000, sinAsignar: 35000 },
+  { fecha: '04/11', quien: 'Marcela Gómez', origen: 'Mercado Pago', importe: 60000, sinAsignar: 60000 },
+  { fecha: '03/11', quien: 'Raúl Benítez', origen: 'Mercado Pago', importe: 70000, sinAsignar: 70000 },
+  { fecha: '09/10', quien: 'Diego Herrera', origen: 'Efectivo (lo anotaste vos)', importe: 42000, sinAsignar: 0 },
+  { fecha: '08/10', quien: 'Claudia Ríos', origen: 'Mercado Pago', importe: 35000, sinAsignar: 0 },
+];
+---
+
+<figure class="m-0 w-full max-w-md">
+  <div class="rounded-3xl border border-salvia bg-white p-4 shadow-alta sm:p-6">
+    <p class="m-0 text-sm font-semibold text-pino">Lo que entró a tu cuenta</p>
+    <ul role="list" class="m-0 mt-3 list-none p-0">
+      {
+        cobros.map((c) => (
+          <li class="flex flex-wrap items-start justify-between gap-x-3 gap-y-2 border-b border-salvia py-3 last:border-b-0">
+            <span class="min-w-0">
+              <span class="block text-sm font-semibold text-tinta">{c.quien}</span>
+              <span class="block text-sm text-texto-secundario">
+                {c.fecha} · {c.origen}
+              </span>
+              <span class="block text-sm text-texto-secundario">No asignado {ars.format(c.sinAsignar)}</span>
+            </span>
+            <span class="ml-auto flex flex-col items-end gap-1">
+              <span class="text-sm font-bold whitespace-nowrap text-pino">{ars.format(c.importe)}</span>
+              <Estado tipo={c.origen.startsWith('Efectivo') ? 'neutra' : 'positiva'}>
+                {c.origen.startsWith('Efectivo') ? 'Vigente' : 'Asignable'}
+              </Estado>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <figcaption class="mt-3 text-center text-xs text-texto-secundario">Ejemplo ilustrativo con datos ficticios.</figcaption>
+</figure>

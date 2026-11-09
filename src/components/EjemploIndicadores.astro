@@ -1,0 +1,25 @@
+---
+// Ilustración estática (Demo): tres indicadores de toda la organización. Datos ficticios; textos borrador
+// (el panel todavía no está construido). «No asignado» suma las tres transferencias de «Lo que entró a tu cuenta».
+const ars = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
+const indicadores = [
+  { rotulo: 'Falta cobrar', valor: 736000, detalle: '15 cuotas con saldo' },
+  { rotulo: 'Cobrado en octubre', valor: 412000, detalle: 'Asignado y confirmado' },
+  { rotulo: 'No asignado', valor: 165000, detalle: '3 transferencias esperan tu confirmación' },
+];
+---
+
+<figure class="m-0">
+  <ul role="list" class="m-0 grid list-none gap-4 p-0 sm:grid-cols-3">
+    {
+      indicadores.map((i) => (
+        <li class="min-w-0 rounded-3xl bg-white p-6 shadow-alta-sobre-pino">
+          <p class="m-0 text-sm font-medium text-texto-secundario">{i.rotulo}</p>
+          <p class="m-0 mt-2 text-2xl leading-tight font-bold whitespace-nowrap text-pino sm:text-3xl">{ars.format(i.valor)}</p>
+          <p class="m-0 mt-2 text-sm text-texto-secundario">{i.detalle}</p>
+        </li>
+      ))
+    }
+  </ul>
+  <figcaption class="mt-3 text-xs text-texto-sobre-pino-secundario">Ejemplo ilustrativo con datos ficticios.</figcaption>
+</figure>

@@ -1,14 +1,17 @@
 ---
+import { consulta } from '../lib/correos';
+
 // Preguntas frecuentes: responden las objeciones habituales. <details> funciona sin JavaScript.
 const preguntas = [
   {
     pregunta: '¿Y si paga el tío, con otro nombre?',
     respuesta:
-      'Lo anotás una vez como alguien que paga por esa persona. Desde ahí, Cauren lo tiene en cuenta para decirte de quién es cada transferencia.',
+      'Lo anotás una vez, con sus datos, como alguien que paga por esa persona. Cuando Cauren no puede saber de quién es, te lo dice y lo asignás vos.',
   },
   {
     pregunta: '¿Las familias tienen que pagar por Mercado Pago?',
-    respuesta: 'No. Pueden transferir desde cualquier banco o billetera. Lo que importa es que la plata entre a tu cuenta de Mercado Pago.',
+    respuesta:
+      'No. Pueden transferir desde cualquier banco o billetera, siempre que la plata entre a tu cuenta de Mercado Pago. Si Cauren no puede saber de quién es, te lo dice y lo asignás vos.',
   },
   {
     pregunta: '¿Y lo que entra a otras billeteras o bancos?',
@@ -25,22 +28,37 @@ const preguntas = [
   },
   {
     pregunta: '¿Cuánto cuesta?',
-    respuesta: 'Estamos en etapa piloto, trabajando con pocas organizaciones. Escribinos y lo charlamos.',
+    respuesta: 'Estamos armando la etapa piloto con un grupo chico. Escribinos y lo charlamos.',
   },
 ];
 ---
 
-<section id="preguntas" aria-labelledby="preguntas-titulo" class="scroll-mt-20 bg-niebla">
-  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-    <p class="revelar text-xs font-semibold tracking-[0.2em] text-bosque uppercase">Preguntas</p>
-    <h2 id="preguntas-titulo" class="revelar mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl">
-      Lo que nos suelen preguntar
-    </h2>
-    <div class="mt-10 grid max-w-3xl gap-3">
+<section id="preguntas" aria-labelledby="preguntas-titulo" class="bg-niebla">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-12 lg:gap-16">
+    <div class="columna-fija lg:col-span-4 lg:self-start">
+      <p class="antetitulo revelar">Preguntas</p>
+      <h2 id="preguntas-titulo" class="revelar mt-3 text-3xl font-bold tracking-tight text-pino sm:text-4xl">
+        Lo que nos suelen preguntar
+      </h2>
+      <p class="mt-8">
+        <a
+          href={consulta}
+          class="inline-flex rounded-full bg-pino px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-bosque"
+        >
+          Escribinos<span class="sr-only">, abre tu correo</span>
+        </a>
+      </p>
+    </div>
+    <div class="grid content-start gap-3 lg:col-span-8">
       {preguntas.map(({ pregunta, respuesta }) => (
-        <details class="revelar group rounded-2xl border border-salvia bg-white p-5">
-          <summary class="cursor-pointer text-lg font-semibold text-pino">{pregunta}</summary>
-          <p class="m-0 mt-3 text-base leading-relaxed text-tinta/80">{respuesta}</p>
+        <details class="acordeon revelar rounded-2xl border border-salvia bg-white">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 rounded-2xl p-5 text-lg font-semibold text-pino hover:bg-niebla">
+            {pregunta}
+            <svg class="chevron h-5 w-5 flex-none text-bosque" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M4 7.5 10 13.5 16 7.5" />
+            </svg>
+          </summary>
+          <p class="m-0 max-w-3xl px-5 pb-5 text-base leading-relaxed text-texto-cuerpo">{respuesta}</p>
         </details>
       ))}
     </div>
