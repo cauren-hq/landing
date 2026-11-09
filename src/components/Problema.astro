@@ -1,17 +1,17 @@
 ---
-// Tarjetas de dolor que describen el problema que resuelve Cauren.
+// Escenas que el público reconoce: saber de quién es un pago lleva muchos pasos.
 const dolores = [
   {
-    titulo: 'Transferencias sin referencia',
-    descripcion: 'El dinero llega, pero no dice de quién es ni a qué venta corresponde.',
+    titulo: 'Un número que no tenés agendado',
+    descripcion: '«Hola, es de Sofi.» ¿Qué Sofi? ¿De qué viaje? Mirás el importe y empezás a buscar.',
   },
   {
-    titulo: 'Comprobantes por cualquier lado',
-    descripcion: 'Te llegan capturas, PDF y fotos, cada uno por un lado. Y ninguna cuadra con la planilla.',
+    titulo: 'Preguntarle a otro',
+    descripcion: 'Para saber quién pagó, le preguntás a la jefa de equipo, a la familia o al grupo. Y esperás que te contesten.',
   },
   {
-    titulo: 'La planilla siempre atrasada',
-    descripcion: 'Actualizar el Excel lleva horas. Y cuando lo terminás, ya llegaron más pagos.',
+    titulo: 'El chat que se borró',
+    descripcion: 'El error en la planilla aparece un mes después. Vas a buscar el comprobante y el chat ya no está.',
   },
 ];
 ---
@@ -20,7 +20,7 @@ const dolores = [
   <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
     <p class="revelar text-xs font-semibold tracking-[0.2em] text-bosque uppercase">El problema</p>
     <h2 id="problema-titulo" class="revelar mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl">
-      Cobrar no es lo difícil.<br />Saber qué se cobró, sí.
+      La plata entra sola.<br />Saber de quién es, no.
     </h2>
 
     <ul role="list" class="mt-10 grid list-none gap-6 p-0 sm:grid-cols-3">
@@ -34,7 +34,8 @@ const dolores = [
     </ul>
 
     <p class="revelar mt-10 max-w-2xl text-xl font-semibold text-pino">
-      A fin de mes, nadie sabe con certeza quién pagó qué ni cuánto falta cobrar.
+      Y muchas veces ni siquiera paga quien viaja o estudia: paga la mamá, el tío o la pareja, con otro nombre.
     </p>
+    <p class="mt-3 text-xs text-tinta/75">Situaciones de ejemplo.</p>
   </div>
 </section>

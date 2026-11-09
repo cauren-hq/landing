@@ -29,10 +29,10 @@ const og = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" vi
   <g transform="translate(860 150) scale(2.75)" opacity="0.18">${simbolo}</g>
   <g transform="translate(96 92) scale(0.6)">${simbolo}</g>
   <text x="182" y="137" font-family="Manrope" font-weight="600" font-size="38" letter-spacing="5.5" fill="#FFFFFF">CAUREN</text>
-  <text x="96" y="318" font-family="Manrope" font-weight="700" font-size="76" fill="#FFFFFF">Conectá tus cobros.</text>
-  <text x="96" y="408" font-family="Manrope" font-weight="700" font-size="76" fill="#FFFFFF">Ordená tu negocio.</text>
+  <text x="96" y="318" font-family="Manrope" font-weight="700" font-size="76" fill="#FFFFFF">Cuentas claras</text>
+  <text x="96" y="408" font-family="Manrope" font-weight="700" font-size="76" fill="#FFFFFF">con quien te paga.</text>
   <rect x="96" y="460" width="88" height="8" rx="4" fill="#6FCF4F"/>
-  <text x="96" y="530" font-family="Manrope" font-weight="500" font-size="30" fill="#DCE8DC">Conciliación de cobros para empresas argentinas</text>
+  <text x="96" y="530" font-family="Manrope" font-weight="500" font-size="30" fill="#DCE8DC">Sabé de quién es cada pago que entra a tu Mercado Pago</text>
 </svg>`;
 await sharp(Buffer.from(og)).png().toFile(path.join(publicDir, 'og.png'));
 console.log('Imágenes generadas en', publicDir);

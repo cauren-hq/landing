@@ -1,0 +1,48 @@
+---
+// Preguntas frecuentes: responden las objeciones habituales. <details> funciona sin JavaScript.
+const preguntas = [
+  {
+    pregunta: '¿Y si paga el tío, con otro nombre?',
+    respuesta:
+      'Lo anotás una vez como alguien que paga por esa persona. Desde ahí, Cauren lo tiene en cuenta para decirte de quién es cada transferencia.',
+  },
+  {
+    pregunta: '¿Las familias tienen que pagar por Mercado Pago?',
+    respuesta: 'No. Pueden transferir desde cualquier banco o billetera. Lo que importa es que la plata entre a tu cuenta de Mercado Pago.',
+  },
+  {
+    pregunta: '¿Y lo que entra a otras billeteras o bancos?',
+    respuesta: 'Hoy Cauren ve tu cuenta de Mercado Pago y el efectivo que anotás. Otras billeteras y bancos vienen más adelante.',
+  },
+  {
+    pregunta: '¿Y si Cauren se equivoca?',
+    respuesta:
+      'Te dice por qué cree que el pago es de esa persona, y nada se asigna sin que lo confirmes. Si no está seguro, te lo dice y lo asignás vos.',
+  },
+  {
+    pregunta: '¿Lo pueden usar quien me ayuda y mi contador?',
+    respuesta: 'Sí. Cada uno entra con su usuario, su contraseña y verificación en dos pasos.',
+  },
+  {
+    pregunta: '¿Cuánto cuesta?',
+    respuesta: 'Estamos en etapa piloto, trabajando con pocas organizaciones. Escribinos y lo charlamos.',
+  },
+];
+---
+
+<section id="preguntas" aria-labelledby="preguntas-titulo" class="scroll-mt-20 bg-niebla">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+    <p class="revelar text-xs font-semibold tracking-[0.2em] text-bosque uppercase">Preguntas</p>
+    <h2 id="preguntas-titulo" class="revelar mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl">
+      Lo que nos suelen preguntar
+    </h2>
+    <div class="mt-10 grid max-w-3xl gap-3">
+      {preguntas.map(({ pregunta, respuesta }) => (
+        <details class="revelar group rounded-2xl border border-salvia bg-white p-5">
+          <summary class="cursor-pointer text-lg font-semibold text-pino">{pregunta}</summary>
+          <p class="m-0 mt-3 text-base leading-relaxed text-tinta/80">{respuesta}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

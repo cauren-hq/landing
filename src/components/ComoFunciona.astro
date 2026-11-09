@@ -5,36 +5,27 @@ import EjemploConciliacion from './EjemploConciliacion.astro';
 const pasos = [
   {
     numero: 1,
-    titulo: 'Cargá lo que esperás cobrar',
-    descripcion: 'Registrá tus ventas, quiénes participan en cada una y, si querés, un cronograma de cuotas.',
+    titulo: 'Anotá a quién le cobrás',
+    descripcion: 'Cargás el viaje, la cuota o el servicio, a quién le cobrás y quién paga por cada uno. Si es en cuotas, también las fechas.',
     imagen: '/app/venta-detalle.png',
     ancho: 380,
     alto: 386,
-    alt: 'Detalle de una venta en Cauren: total, cobrado y cada cuota con su vencimiento, importe y estado.',
+    alt: 'Viaje a Mar del Plata de Benjamín Herrera en Cauren: total, cobrado y cada cuota con su fecha, su importe y su estado.',
   },
   {
     numero: 2,
-    titulo: 'Incorporá lo que entra',
-    descripcion: 'Cauren incorpora las transferencias que recibís en tu cuenta de Mercado Pago y vos registrás los cobros en efectivo.',
+    titulo: 'Conectá tu Mercado Pago',
+    descripcion: 'Cauren ve las transferencias que entran a tu cuenta, vengan del banco o la billetera que sea. El efectivo lo anotás vos.',
     imagen: '/app/cobros-tabla.png',
     ancho: 1112,
     alto: 378,
-    alt: 'Lista de cobros en Cauren con transferencias de Mercado Pago y efectivo, filtros por estado y el estado de cada cobro.',
+    alt: 'Lista de cobros en Cauren: transferencias de Mercado Pago de cada familia y un cobro en efectivo, con su referencia, su importe y su estado.',
   },
   {
     numero: 3,
-    titulo: 'Revisá las coincidencias',
-    descripcion: 'Cuando encuentra una coincidencia, Cauren te propone la venta que corresponde y te muestra en qué se basa: referencia, importe, fecha o cliente. Si no la encuentra, la asignás vos.',
+    titulo: 'Confirmá de quién es cada pago',
+    descripcion: 'Cauren te dice de quién cree que es cada transferencia y por qué. Vos lo confirmás, y sabés quién está al día y a quién le falta. Si no está seguro, te lo dice y lo asignás vos.',
     usarMockup: true,
-  },
-  {
-    numero: 4,
-    titulo: 'Confirmá y seguí',
-    descripcion: 'Nada se asigna sin tu confirmación. Los saldos pendientes se actualizan solos y cada decisión queda registrada.',
-    imagen: '/app/vencimientos.png',
-    ancho: 416,
-    alto: 463,
-    alt: 'Próximos vencimientos en Cauren: cada cuota con su fecha, su cliente y el importe que falta cobrar.',
   },
 ];
 ---
@@ -43,7 +34,7 @@ const pasos = [
   <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
     <p class="revelar text-xs font-semibold tracking-[0.2em] text-bosque uppercase">Cómo funciona</p>
     <h2 id="como-funciona-titulo" class="revelar mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl">
-      De lo esperado a lo cobrado, en cuatro pasos
+      Tres pasos, y sabés de quién es cada pago
     </h2>
 
     <ol role="list" class="mt-12 list-none space-y-16 p-0 lg:space-y-24">
