@@ -2,6 +2,8 @@
 // Símbolo de deQuien según la guía de marca v2.0 («Construcción del símbolo»): retícula de 120 unidades,
 // nodo central de radio 26 y cuatro nodos de radio 15 a 38 u del centro, unidos por conectores de 11 u
 // con extremos redondeados. Se construye con esas medidas, no se redibuja. La banda Brote no cambia.
+// Los grupos y `--i` son para la entrada (ver `.logo-animado` en global.css): solo animan opacidad y
+// trazo, porque mover o escalar una pieza suelta del SVG la pinta detrás de las demás.
 import { SIMBOLO, SIMBOLO_VIEWBOX } from '../lib/marca.js';
 
 interface Props {
@@ -22,12 +24,14 @@ const nodos = [
 
 <svg viewBox={SIMBOLO_VIEWBOX} class:list={['simbolo', className]} aria-hidden="true" focusable="false">
   <g class="simbolo-g">
-    <g stroke={tinta} stroke-width={conector} stroke-linecap="round">
+    <g class="simbolo-conectores" stroke={tinta} stroke-width={conector} stroke-linecap="round">
       {nodos.map((nodo) => <line x1={centro} y1={centro} x2={nodo.x} y2={nodo.y}></line>)}
     </g>
-    {nodos.map((nodo) => <circle cx={nodo.x} cy={nodo.y} r={radioNodo} fill={tinta}></circle>)}
-    <g class="simbolo-b">
-      <circle class="simbolo-brote" cx={centro} cy={centro} r={radioCentro} fill="#6FCF4F"></circle>
-    </g>
+    {
+      nodos.map((nodo, i) => (
+        <circle class="simbolo-nodo" style={`--i:${i}`} cx={nodo.x} cy={nodo.y} r={radioNodo} fill={tinta}></circle>
+      ))
+    }
+    <circle class="simbolo-brote" cx={centro} cy={centro} r={radioCentro} fill="#6FCF4F"></circle>
   </g>
 </svg>

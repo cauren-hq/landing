@@ -21,3 +21,19 @@ const colorTexto = version === 'positiva' ? '#0E3B2A' : '#FFFFFF';
     <path fill={colorTexto} fill-rule="nonzero" d={PALABRA}></path>
   </svg>
 </span>
+
+<script>
+  // Al pasar el mouse por el logo se repite la entrada: se reinician las animaciones de CSS ya declaradas,
+  // así no hay una segunda copia de los keyframes. Sin JavaScript o con «reducir movimiento» no hay nada
+  // que reiniciar y el logo se ve igual, quieto.
+  for (const logo of document.querySelectorAll('.logo-animado')) {
+    logo.addEventListener('pointerenter', () => {
+      for (const parte of logo.querySelectorAll('.simbolo-conectores, .simbolo-nodo, .simbolo-brote')) {
+        for (const animacion of parte.getAnimations()) {
+          animacion.currentTime = 0;
+          animacion.play();
+        }
+      }
+    });
+  }
+</script>

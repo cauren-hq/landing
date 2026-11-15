@@ -296,21 +296,24 @@
     }
   }
 
-  @keyframes logo-entrada {
+  /* Entrada del logotipo: primero el nodo Brote, después se trazan los conectores y por último aparecen
+     las personas. Solo se animan opacidad y trazo: mover o escalar una pieza suelta del SVG la pinta
+     detrás de las demás (Chromium la saca del orden de pintado). */
+  @keyframes conector-entrada {
     from {
-      opacity: 0;
-      transform: rotate(-140deg) scale(0.5);
-    }
-    65% {
-      opacity: 1;
-      transform: rotate(10deg) scale(1.08);
+      stroke-dashoffset: 54;
     }
   }
 
-  @keyframes logo-brote {
+  @keyframes nodo-entrada {
     from {
       opacity: 0;
-      transform: translateX(-16px);
+    }
+  }
+
+  @keyframes brote-entrada {
+    from {
+      opacity: 0;
     }
   }
 
@@ -456,31 +459,22 @@
       animation-delay: 150ms;
     }
 
-    /* Logo del encabezado: entra girando y se asienta; al pasar el mouse se repite esa entrada.
-       Es una rotación y escala uniformes: el símbolo no se deforma y termina siempre en su forma original. */
-    .logo-animado .simbolo {
-      overflow: visible;
-    }
-
-    .logo-animado .simbolo-g {
-      transform-box: view-box;
-      /* Centro del `viewBox`, que es el centro del símbolo: la entrada gira sin deformarlo. */
-      transform-origin: center;
-      animation: logo-entrada 1000ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
-    }
-
+    /* Logo del encabezado: entrada en tres tiempos, una sola vez. Al pasar el mouse se repite (ver el
+       script de Logo.astro, que reinicia estas mismas animaciones). */
     .logo-animado .simbolo-brote {
-      animation: logo-brote 500ms ease-out 650ms backwards;
+      animation: brote-entrada 300ms ease-out both;
     }
 
-    /* Al pasar el mouse se repite la animación de carga. Va en otros elementos (el <svg> y el <g> de la banda)
-       para que al sacar el mouse no se vuelva a disparar la de carga. */
-    .logo-animado:hover .simbolo {
-      animation: logo-entrada 1000ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    .logo-animado .simbolo-conectores {
+      /* 54 u es el largo del conector (38 √2 ≈ 53,7) con un pelo de más: el trazo arranca escondido y se
+         dibuja desde el centro. */
+      stroke-dasharray: 54;
+      animation: conector-entrada 420ms cubic-bezier(0.4, 0, 0.2, 1) 220ms both;
     }
 
-    .logo-animado:hover .simbolo-b {
-      animation: logo-brote 500ms ease-out 650ms backwards;
+    .logo-animado .simbolo-nodo {
+      animation: nodo-entrada 300ms ease-out both;
+      animation-delay: calc(560ms + var(--i) * 70ms);
     }
 
     /* Fondo de la portada: ondas que fluyen despacio, como una brisa o un río */
@@ -591,20 +585,29 @@
       }
 
       /* Logo de la sección de demo: la misma entrada, pero atada al scroll */
-      .logo-scroll .simbolo-g {
-        animation-name: logo-entrada;
+      .logo-scroll .simbolo-conectores {
+        stroke-dasharray: 54;
+        animation-name: conector-entrada;
         animation-timing-function: linear;
         animation-fill-mode: backwards;
         animation-timeline: view();
-        animation-range: entry 0% entry 100%;
+        animation-range: entry 10% entry 70%;
+      }
+
+      .logo-scroll .simbolo-nodo {
+        animation-name: nodo-entrada;
+        animation-timing-function: linear;
+        animation-fill-mode: backwards;
+        animation-timeline: view();
+        animation-range: entry 40% entry 90%;
       }
 
       .logo-scroll .simbolo-brote {
-        animation-name: logo-brote;
+        animation-name: brote-entrada;
         animation-timing-function: linear;
         animation-fill-mode: backwards;
         animation-timeline: view();
-        animation-range: entry 40% entry 100%;
+        animation-range: entry 50% entry 100%;
       }
 
       /* Barras de progreso que se llenan al entrar en pantalla */
