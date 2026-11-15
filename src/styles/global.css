@@ -1,7 +1,7 @@
 @import '@fontsource-variable/manrope';
 @import 'tailwindcss';
 
-/* Paleta y tipografía de la guía de marca de Cauren (docs/ux/guia-de-marca.md en cauren-hq/cauren). */
+/* Paleta y tipografía de la guía de marca de deQuien («deQuien — Identidad de marca», v2.0). */
 @theme {
   --color-pino: #0e3b2a; /* Color principal */
   --color-bosque: #1f7a45; /* Texto destacado y enlaces */
@@ -464,7 +464,8 @@
 
     .logo-animado .simbolo-g {
       transform-box: view-box;
-      transform-origin: 60px 60px;
+      /* Centro del `viewBox`, que es el centro del símbolo: la entrada gira sin deformarlo. */
+      transform-origin: center;
       animation: logo-entrada 1000ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
     }
 

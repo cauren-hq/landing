@@ -3,8 +3,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const SITIO = 'https://cauren.app';
-const CORREO = 'info@cauren.app';
+const SITIO = 'https://dequien.app';
+const CORREO = 'info@dequien.app';
 const dist = process.argv[2] ?? 'dist';
 const problemas = [];
 
@@ -59,7 +59,7 @@ if (noEncontrada) {
   exigir(noEncontrada.includes('href="/"'), '404.html debe enlazar a la portada');
 }
 
-// Rastreadores: robots permite todo y apunta al sitemap; el sitemap solo lista URL de cauren.app.
+// Rastreadores: robots permite todo y apunta al sitemap; el sitemap solo lista URL de dequien.app.
 const robots = leer('robots.txt');
 if (robots) {
   exigir(/^Allow: \/$/m.test(robots), 'robots.txt debe permitir todo');
@@ -98,7 +98,7 @@ for (const [archivo, html] of [
 }
 
 // Dominio propio.
-exigir(leer('CNAME').trim() === 'cauren.app', 'CNAME debe contener cauren.app');
+exigir(leer('CNAME').trim() === 'dequien.app', 'CNAME debe contener dequien.app');
 
 if (problemas.length > 0) {
   console.error(`La verificación del build encontró ${problemas.length} problema(s):`);

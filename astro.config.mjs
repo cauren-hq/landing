@@ -4,9 +4,9 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// El dominio propio es la única URL canónica del sitio (cauren.app).
+// El dominio propio es la única URL canónica del sitio (dequien.app).
 export default defineConfig({
-  site: 'https://cauren.app',
+  site: 'https://dequien.app',
   trailingSlash: 'ignore',
   integrations: [mdx(), sitemap()],
   vite: {
