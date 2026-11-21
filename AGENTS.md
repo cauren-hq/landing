@@ -1,25 +1,27 @@
-# Landing de Cauren — Instrucciones para agentes
+# Landing de deQuien — Instrucciones para agentes
 
-Este repositorio es público y contiene solo la landing de `cauren.app`. El producto, sus especificaciones y la guía de marca están en el repositorio privado `cauren-hq/cauren`; no copiar aquí especificaciones, código ni documentos internos.
+Este repositorio es público y contiene solo la landing de `dequien.app`. El producto, sus especificaciones y la guía de marca están en el repositorio privado `dequien-hq/dequien`; no copiar aquí especificaciones, código ni documentos internos.
 
 ## Idioma y voz
 
 - Todo el texto, la documentación y los commits van en español, con terminología del contexto argentino.
-- La voz es clara, directa y cercana, con voseo rioplatense y frases breves. El lema vigente es «Conectá tus cobros. Ordená tu negocio.».
+- La voz sigue la guía de marca «deQuien — Identidad de marca» (v2.0): clara, cercana, tranquila y precisa, con voseo rioplatense y frases breves. Personas antes que números, nunca culpar a quien debe y decir lo que deQuien no hace. El lema vigente es «Cuentas claras con quien te paga.» y la bajada, «La plata entra sola. Saber de quién es, no.».
+- El nombre se escribe siempre «deQuien», con la «d» minúscula, incluso al principio de una frase.
+- Sin jerga del producto en el texto visible: «conciliación» va solo en los metadatos para buscadores; tampoco «evidencia», «nivel de confianza», «folio» ni «Persona A». Los ejemplos usan nombres ficticios y van rotulados.
 - En la prosa, los importes y las cantidades usan punto para los miles y coma para los decimales («ARS 80.000»). En la interfaz, un importe se muestra como en la aplicación: `Intl.NumberFormat('es-AR', { style: 'currency', currency })`, por ejemplo «$ 80.000,00», con espacio de no separación.
 
 ## Marca
 
 - Paleta: Pino `#0E3B2A` (principal), Bosque `#1F7A45` (texto destacado y enlaces), Brote `#6FCF4F` (acento, solo en elementos gráficos, nunca como color de texto), Salvia `#DCE8DC` (líneas y estados suaves), Niebla `#F4F7F3` (fondo), Tinta `#13201A` (texto). Están definidos como tokens en `src/styles/global.css`.
-- Tipografía: Manrope (Regular, Medium, SemiBold, Bold).
-- El símbolo se usa con sus trazados originales: no redibujarlo, deformarlo ni cambiar sus proporciones. Tamaño mínimo a una tinta: 24 px.
+- Tipografía: Manrope (Regular, Medium, SemiBold, Bold, ExtraBold). El logotipo usa «de» en Regular y «Quien» en Bold.
+- El símbolo son cinco puntos y una conexión: nodo central Brote de radio 26 sobre una retícula de 120 u, cuatro nodos de radio 15 a 38 u del centro y conectores de 11 u con extremos redondeados. Se usa con las medidas y los trazados de la guía: no redibujarlo, deformarlo ni cambiar sus proporciones. Tamaño mínimo a una tinta: 24 px.
 
 ## Contenido
 
-- El texto describe solo capacidades del MVP vigente de Cauren: ventas, cuotas, Mercado Pago, efectivo registrado, enlace para comprobantes, coincidencias explicadas con confirmación humana, saldos y auditoría.
-- No presentar como disponibles la facturación electrónica o ARCA, WhatsApp, la importación bancaria, otras billeteras ni la confirmación automática. Ante una duda, consultar `docs/product/mvp-scope.md` en `cauren-hq/cauren`.
+- El texto describe solo capacidades del MVP vigente de deQuien: ventas, cuotas, Mercado Pago, efectivo registrado, enlace para comprobantes, coincidencias explicadas con confirmación humana, saldos y auditoría.
+- No presentar como disponibles la facturación electrónica o ARCA, WhatsApp, la importación bancaria, otras billeteras ni la confirmación automática. Ante una duda, consultar `docs/product/mvp-scope.md` en `dequien-hq/dequien`.
 - No afirmar nada sobre competidores.
-- No recolectar datos personales. El contacto es `mailto:info@cauren.app`.
+- No recolectar datos personales. El contacto es `mailto:info@dequien.app`.
 
 ## Técnica
 

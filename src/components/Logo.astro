@@ -1,18 +1,39 @@
 ---
-// Logotipo horizontal provisorio: símbolo original + «CAUREN» en Manrope. Se reemplaza por el
-// archivo vectorial del logotipo cuando esté disponible.
+// Logotipo horizontal de deQuien: el símbolo (Simbolo.astro) y la palabra «deQuien» con los trazados del
+// manual de marca («de» en Manrope Regular y «Quien» en Manrope Bold). Ambos comparten la retícula de 120
+// unidades del símbolo, así que juntos reproducen el logotipo original sin redibujarlo.
 import Simbolo from './Simbolo.astro';
+import { PALABRA, PALABRA_VIEWBOX } from '../lib/marca.js';
 
 interface Props {
   version?: 'positiva' | 'negativa';
   class?: string;
+  animado?: boolean;
 }
 
-const { version = 'positiva', class: className } = Astro.props;
-const colorTexto = version === 'positiva' ? 'text-pino' : 'text-white';
+const { version = 'positiva', class: className = 'h-9', animado = false } = Astro.props;
+const colorTexto = version === 'positiva' ? '#0E3B2A' : '#FFFFFF';
 ---
 
-<span class:list={['inline-flex items-center gap-2.5', className]}>
-  <Simbolo version={version} class="h-8 w-8 shrink-0" />
-  <span class:list={['text-xl font-semibold tracking-[0.14em]', colorTexto]}>CAUREN</span>
+<span class:list={['logo inline-flex items-center', animado && 'logo-animado', className]}>
+  <Simbolo version={version} class="h-full w-auto shrink-0" />
+  <svg viewBox={PALABRA_VIEWBOX} class="h-full w-auto" role="img" aria-label="deQuien" focusable="false">
+    <path fill={colorTexto} fill-rule="nonzero" d={PALABRA}></path>
+  </svg>
 </span>
+
+<script>
+  // Al pasar el mouse por el logo se repite la entrada: se reinician las animaciones de CSS ya declaradas,
+  // así no hay una segunda copia de los keyframes. Sin JavaScript o con «reducir movimiento» no hay nada
+  // que reiniciar y el logo se ve igual, quieto.
+  for (const logo of document.querySelectorAll('.logo-animado')) {
+    logo.addEventListener('pointerenter', () => {
+      for (const parte of logo.querySelectorAll('.simbolo-conectores, .simbolo-nodo, .simbolo-brote')) {
+        for (const animacion of parte.getAnimations()) {
+          animacion.currentTime = 0;
+          animacion.play();
+        }
+      }
+    });
+  }
+</script>
