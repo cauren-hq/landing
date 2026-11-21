@@ -12,8 +12,11 @@ dist/
 .bmad-loop/policy.toml
 _bmad/render/
 
-# BMAD: se versiona solo _bmad/custom, _bmad-output y .claude
+# BMAD: se versionan solo _bmad/custom (sin los .user.toml), _bmad-output y .claude/settings.json
 _bmad/*
 !_bmad/custom/
-_bmad/custom/config.user.toml
-.claude/settings.local.json
+_bmad/custom/*
+!_bmad/custom/*.toml
+_bmad/custom/*.user.toml
+.claude/*
+!.claude/settings.json
