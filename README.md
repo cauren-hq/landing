@@ -2,7 +2,7 @@
 
 Sitio público de [deQuien](https://dequien.app): cuentas claras con quien te paga. Es un sitio estático hecho con Astro, TypeScript, Tailwind CSS y MDX, publicado en GitHub Pages con el dominio `dequien.app`.
 
-El producto se desarrolla en el repositorio privado `cauren-hq/cauren`, que guarda la especificación de esta landing (`_bmad-output/implementation-artifacts/spec-landing-page.md`), la guía de marca y el alcance del MVP. Este repositorio solo contiene la landing.
+El producto se desarrolla en el repositorio privado `dequien-hq/dequien`, que guarda la especificación de esta landing (`_bmad-output/implementation-artifacts/spec-landing-page.md`), la guía de marca y el alcance del MVP. Este repositorio solo contiene la landing.
 
 ## Desarrollo local
 
@@ -53,7 +53,7 @@ El workflow `.github/workflows/deploy.yml` verifica tipos, hace el build y corre
 ### Configuración inicial (una sola vez)
 
 1. **Pages:** en *Settings → Pages* del repositorio, elegir **GitHub Actions** como origen.
-2. **Verificación del dominio:** en la organización, *Settings → Pages → Add a domain*, agregar `dequien.app` y crear en Cloudflare el registro TXT que indique GitHub (`_github-pages-challenge-cauren-hq.dequien.app`). Así nadie más puede usar el dominio en otro repositorio de Pages.
+2. **Verificación del dominio:** en la organización, *Settings → Pages → Add a domain*, agregar `dequien.app` y crear en Cloudflare el registro TXT que indique GitHub (`_github-pages-challenge-dequien-hq.dequien.app`). Así nadie más puede usar el dominio en otro repositorio de Pages.
 3. **DNS en Cloudflare**, todos en modo *DNS only* (nube gris, sin proxy) para que GitHub pueda emitir el certificado:
 
    | Tipo | Nombre | Valor |
@@ -66,7 +66,7 @@ El workflow `.github/workflows/deploy.yml` verifica tipos, hace el build y corre
    | AAAA | `dequien.app` | `2606:50c0:8001::153` |
    | AAAA | `dequien.app` | `2606:50c0:8002::153` |
    | AAAA | `dequien.app` | `2606:50c0:8003::153` |
-   | CNAME | `www` | `cauren-hq.github.io` |
+   | CNAME | `www` | `dequien-hq.github.io` |
 
    No tocar los registros MX y TXT del correo de Zoho (`info@dequien.app`).
 4. **Dominio propio:** en *Settings → Pages*, cargar `dequien.app` como *Custom domain*. Cuando GitHub emita el certificado, activar **Enforce HTTPS**. `.app` exige HTTPS en todos los navegadores, así que el sitio no carga hasta que el certificado esté listo.

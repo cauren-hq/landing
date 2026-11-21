@@ -1,6 +1,6 @@
 # Landing de deQuien — Instrucciones para agentes
 
-Este repositorio es público y contiene solo la landing de `dequien.app`. El producto, sus especificaciones y la guía de marca están en el repositorio privado `cauren-hq/cauren`; no copiar aquí especificaciones, código ni documentos internos.
+Este repositorio es público y contiene solo la landing de `dequien.app`. El producto, sus especificaciones y la guía de marca están en el repositorio privado `dequien-hq/dequien`; no copiar aquí especificaciones, código ni documentos internos.
 
 ## Idioma y voz
 
@@ -19,7 +19,7 @@ Este repositorio es público y contiene solo la landing de `dequien.app`. El pro
 ## Contenido
 
 - El texto describe solo capacidades del MVP vigente de deQuien: ventas, cuotas, Mercado Pago, efectivo registrado, enlace para comprobantes, coincidencias explicadas con confirmación humana, saldos y auditoría.
-- No presentar como disponibles la facturación electrónica o ARCA, WhatsApp, la importación bancaria, otras billeteras ni la confirmación automática. Ante una duda, consultar `docs/product/mvp-scope.md` en `cauren-hq/cauren`.
+- No presentar como disponibles la facturación electrónica o ARCA, WhatsApp, la importación bancaria, otras billeteras ni la confirmación automática. Ante una duda, consultar `docs/product/mvp-scope.md` en `dequien-hq/dequien`.
 - No afirmar nada sobre competidores.
 - No recolectar datos personales. El contacto es `mailto:info@dequien.app`.
 
