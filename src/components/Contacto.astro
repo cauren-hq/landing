@@ -1,28 +1,42 @@
 ---
 import Simbolo from './Simbolo.astro';
+import { correo, lanzamiento, piloto } from '../lib/correos';
 
 interface Props {
   titulo: string;
-  correo: string;
 }
 
-const { titulo, correo } = Astro.props;
+const { titulo } = Astro.props;
 ---
 
-<section id="contacto" aria-labelledby="contacto-titulo" class="scroll-mt-20 bg-niebla">
+<section id="contacto" aria-labelledby="contacto-titulo" class="bg-niebla">
   <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-    <div class="relative overflow-hidden rounded-3xl bg-pino px-6 py-12 text-white sm:px-12 sm:py-16">
+    <div class="fondo-pino relative overflow-hidden rounded-3xl bg-pino px-6 py-16 text-white sm:px-12">
       <Simbolo version="negativa" class="flotar pointer-events-none absolute -right-16 -bottom-16 h-72 w-72 opacity-10" />
-      <h2 id="contacto-titulo" class="revelar relative max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">{titulo}</h2>
-      <div class="revelar relative mt-4 max-w-2xl text-lg leading-relaxed text-white/85 [&>p]:m-0">
+      <h2 id="contacto-titulo" class="revelar relative max-w-3xl text-3xl font-bold tracking-tight text-balance sm:text-4xl" data-borrador>{titulo}</h2>
+      <div class="revelar relative mt-4 max-w-2xl text-lg leading-relaxed text-texto-sobre-pino [&>p]:m-0">
         <slot />
       </div>
-      <a
-        href={`mailto:${correo}`}
-        class="revelar relative mt-8 inline-flex rounded-full bg-white px-6 py-3 text-base font-semibold text-pino transition-colors hover:bg-salvia"
-      >
-        Escribinos a {correo}
-      </a>
+      <div class="revelar relative mt-8 flex flex-wrap gap-3">
+        <a
+          href={lanzamiento}
+          class="inline-flex rounded-full bg-white px-6 py-3 text-base font-semibold text-pino transition-colors hover:bg-salvia"
+        >
+          Anotarme al lanzamiento<span class="sr-only">, abre tu correo</span>
+        </a>
+        <a
+          href={piloto}
+          class="inline-flex rounded-full border border-borde-sobre-pino px-6 py-3 text-base font-semibold text-white transition-colors hover:border-white hover:bg-hover-sobre-pino"
+        >
+          Sumarme al piloto<span class="sr-only">, abre tu correo</span>
+        </a>
+      </div>
+      <p class="revelar relative m-0 mt-4 max-w-2xl text-sm text-texto-sobre-pino-secundario">
+        Se abre tu correo con el mensaje armado. Si no se abre, escribinos a {correo}.
+      </p>
+      <p class="revelar relative m-0 mt-4 text-sm text-texto-sobre-pino-secundario" data-borrador>
+        ¿Preferís escribirnos directo? <a href={`mailto:${correo}`} class="font-semibold text-white underline underline-offset-4">{correo}<span class="sr-only">, abre tu correo</span></a>
+      </p>
     </div>
   </div>
 </section>

@@ -16,11 +16,11 @@ const dolores = [
 ];
 ---
 
-<section id="problema" aria-labelledby="problema-titulo" class="scroll-mt-20 bg-white">
+<section id="problema" aria-labelledby="problema-titulo" class="bg-white">
   <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-    <p class="revelar text-xs font-semibold tracking-[0.2em] text-bosque uppercase">El problema</p>
-    <h2 id="problema-titulo" class="revelar mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl">
-      La plata entra sola.<br />Saber de quién es, no.
+    <p class="antetitulo revelar">El problema</p>
+    <h2 id="problema-titulo" class="revelar mt-3 max-w-3xl text-3xl font-bold tracking-tight text-pino sm:text-4xl" data-borrador>
+      Entra una transferencia.<br />¿De quién es?
     </h2>
 
     <ul role="list" class="mt-10 grid list-none gap-6 p-0 sm:grid-cols-3">
@@ -28,7 +28,7 @@ const dolores = [
         <li class="revelar elevar flex flex-col gap-3 rounded-2xl border border-salvia bg-niebla p-6">
           <span class="h-1.5 w-10 rounded-full bg-brote" aria-hidden="true"></span>
           <h3 class="text-lg font-semibold text-pino">{dolor.titulo}</h3>
-          <p class="m-0 text-base leading-relaxed text-tinta/80">{dolor.descripcion}</p>
+          <p class="m-0 text-base leading-relaxed text-texto-cuerpo">{dolor.descripcion}</p>
         </li>
       ))}
     </ul>
@@ -36,6 +36,6 @@ const dolores = [
     <p class="revelar mt-10 max-w-2xl text-xl font-semibold text-pino">
       Y muchas veces ni siquiera paga quien viaja o estudia: paga la mamá, el tío o la pareja, con otro nombre.
     </p>
-    <p class="mt-3 text-xs text-tinta/75">Situaciones de ejemplo.</p>
+    <p class="mt-3 text-xs text-texto-secundario">Situaciones de ejemplo.</p>
   </div>
 </section>

@@ -1,38 +1,52 @@
-// Genera los PNG de `public/` (favicons, ícono e imagen OG) desde los originales de marca de
-// `cauren-hq/cauren` (docs/ux/assets). Uso y requisitos en README.md.
-import fs from 'node:fs';
+// Genera los PNG de `public/` (favicons, ícono e imagen OG) desde el ícono vectorial del sitio
+// (`public/favicon.svg`) y los datos del logotipo (`src/lib/marca.js`). Uso y requisitos en README.md.
+
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { PALABRA, SIMBOLO } from '../src/lib/marca.js';
 
 // sharp llega como dependencia opcional de Astro; se resuelve desde Astro para no duplicarla.
 const desdeAstro = createRequire(createRequire(import.meta.url).resolve('astro/package.json'));
 const sharp = desdeAstro('sharp');
 
-const [, , assetsDir, publicDir = 'public'] = process.argv;
-if (!assetsDir) {
-  throw new Error('Uso: node scripts/generar-imagenes.mjs <ruta a docs/ux/assets> [public]');
-}
+const [, , publicDir = 'public'] = process.argv;
+const icono = path.join(publicDir, 'favicon.svg');
 
-const icono = path.join(assetsDir, 'cauren-icono-app-1024.png');
+await sharp(icono, { density: 512 }).resize(32, 32).png().toFile(path.join(publicDir, 'favicon-32.png'));
+await sharp(icono, { density: 512 }).resize(180, 180).png().toFile(path.join(publicDir, 'apple-touch-icon.png'));
+await sharp(icono, { density: 512 }).resize(512, 512).png().toFile(path.join(publicDir, 'icono-512.png'));
 
-await sharp(icono).resize(32, 32).png().toFile(path.join(publicDir, 'favicon-32.png'));
-await sharp(icono).resize(180, 180).png().toFile(path.join(publicDir, 'apple-touch-icon.png'));
-await sharp(icono).resize(512, 512).png().toFile(path.join(publicDir, 'icono-512.png'));
+// Símbolo en las coordenadas de la retícula (120 u), para dibujarlo dentro de la imagen OG.
+const { centro, separacion, radioNodo, radioCentro, conector } = SIMBOLO;
+const nodos = [
+  [centro - separacion, centro - separacion],
+  [centro + separacion, centro - separacion],
+  [centro - separacion, centro + separacion],
+  [centro + separacion, centro + separacion],
+];
+const simbolo = `
+  <g stroke="#FFFFFF" stroke-width="${conector}" stroke-linecap="round">
+    ${nodos.map(([x, y]) => `<line x1="${centro}" y1="${centro}" x2="${x}" y2="${y}"/>`).join('')}
+  </g>
+  ${nodos.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="${radioNodo}" fill="#FFFFFF"/>`).join('')}
+  <circle cx="${centro}" cy="${centro}" r="${radioCentro}" fill="#6FCF4F"/>`;
 
-const svg = fs.readFileSync(path.join(assetsDir, 'cauren-icono-app.svg'), 'utf8');
-const trazados = [...svg.matchAll(/<path fill="(#[0-9A-F]+)" d="([^"]+)"/g)].map((m) => ({ fill: m[1], d: m[2] }));
-if (trazados.length !== 2) throw new Error('No se encontraron los dos trazados del símbolo.');
-const simbolo = trazados.map((t) => `<path fill="${t.fill}" d="${t.d}"/>`).join('');
+// Logotipo negativo a 46 px de alto: el símbolo y la palabra comparten la retícula, así que se escalan juntos.
+const alto = 46;
+const escala = alto / 106;
+const logotipo = `
+  <g transform="translate(${96 - 7 * escala} ${90 - 7 * escala}) scale(${escala})">
+    ${simbolo}
+    <path fill="#FFFFFF" fill-rule="nonzero" d="${PALABRA}"/>
+  </g>`;
 
 const og = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#0E3B2A"/>
-  <g transform="translate(860 150) scale(2.75)" opacity="0.18">${simbolo}</g>
-  <g transform="translate(96 92) scale(0.6)">${simbolo}</g>
-  <text x="182" y="137" font-family="Manrope" font-weight="600" font-size="38" letter-spacing="5.5" fill="#FFFFFF">CAUREN</text>
+  ${logotipo}
   <text x="96" y="318" font-family="Manrope" font-weight="700" font-size="76" fill="#FFFFFF">Cuentas claras</text>
   <text x="96" y="408" font-family="Manrope" font-weight="700" font-size="76" fill="#FFFFFF">con quien te paga.</text>
-  <rect x="96" y="460" width="88" height="8" rx="4" fill="#6FCF4F"/>
-  <text x="96" y="530" font-family="Manrope" font-weight="500" font-size="30" fill="#DCE8DC">Sabé de quién es cada pago que entra a tu Mercado Pago</text>
+  <rect x="96" y="452" width="88" height="8" rx="4" fill="#6FCF4F"/>
+  <text x="96" y="528" font-family="Manrope" font-weight="500" font-size="30" fill="#DCE8DC">La plata entra sola. Saber de quién es, no.</text>
 </svg>`;
 await sharp(Buffer.from(og)).png().toFile(path.join(publicDir, 'og.png'));
 console.log('Imágenes generadas en', publicDir);

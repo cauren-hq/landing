@@ -1,5 +1,5 @@
 # Verifica la landing en cada PR y la publica en GitHub Pages con cada push a `main`.
-# Requiere Pages con origen «GitHub Actions» y el dominio cauren.app (ver README.md).
+# Requiere Pages con origen «GitHub Actions» y el dominio dequien.app (ver README.md).
 name: Landing
 
 on:

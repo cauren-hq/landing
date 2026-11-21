@@ -1,0 +1,10 @@
+---
+// Píldora de estado con las variantes de la guía de marca: positiva, neutra o pendiente. Siempre lleva su texto.
+interface Props {
+  tipo: 'positiva' | 'neutra' | 'pendiente';
+}
+
+const { tipo } = Astro.props;
+---
+
+<span class:list={['pildora', `pildora-${tipo}`]}><slot /></span>
