@@ -7,3 +7,13 @@ dist/
 .env
 .env.*
 .DS_Store
+.bmad-loop/runs/
+.bmad-loop/cache/
+.bmad-loop/policy.toml
+_bmad/render/
+
+# BMAD: se versiona solo _bmad/custom, _bmad-output y .claude
+_bmad/*
+!_bmad/custom/
+_bmad/custom/config.user.toml
+.claude/settings.local.json
