@@ -1,42 +1,96 @@
 ---
-import EjemploConciliacion from './EjemploConciliacion.astro';
+import TarjetaCoincidencias from './TarjetaCoincidencias.astro';
+import { correo, lanzamiento, piloto } from '../lib/correos';
 
 interface Props {
   antetitulo: string;
   titulo: string;
-  correo: string;
+  insight: string;
 }
 
-const { antetitulo, titulo, correo } = Astro.props;
+const { antetitulo, titulo, insight } = Astro.props;
+
+// Líneas de «flujo» del fondo: ondas que se desplazan despacio, en verdes de la marca.
+// Cada onda repite su patrón cada 1200 unidades y mide 2400 de ancho, así el desplazamiento
+// de -50% enlaza sin saltos. `amp` es cuánto sube y baja; `t` es la duración de una pasada.
+const ondas = [
+  { top: 14, alto: 32, color: '#1F7A45', op: 0.16, ancho: 1.5, amp: 90, t: 55, inv: false },
+  { top: 30, alto: 36, color: '#6FCF4F', op: 0.4, ancho: 2, amp: 70, t: 42, inv: true },
+  { top: 44, alto: 34, color: '#DCE8DC', op: 1, ancho: 3, amp: 80, t: 80, inv: false },
+  { top: 58, alto: 32, color: '#1F7A45', op: 0.12, ancho: 1.5, amp: 100, t: 68, inv: true },
+  { top: 68, alto: 30, color: '#6FCF4F', op: 0.28, ancho: 2, amp: 60, t: 50, inv: false },
+];
+const trazo = (amp: number) => `M0 100 Q300 ${100 - amp} 600 100 T1200 100 T1800 100 T2400 100`;
 ---
 
-<section aria-labelledby="portada-titulo" class="bg-niebla">
-  <div class="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-[1.1fr_1fr]">
-    <div>
-      <p class="text-xs font-semibold tracking-[0.2em] text-bosque uppercase">{antetitulo}</p>
+<section aria-labelledby="portada-titulo" class="relative overflow-hidden bg-niebla">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    {
+      ondas.map((onda) => (
+        <svg
+          viewBox="0 0 2400 200"
+          preserveAspectRatio="none"
+          focusable="false"
+          class:list={['fluir absolute left-0 w-[200%]', onda.inv && 'fluir-inv']}
+          style={`top: ${onda.top}%; height: ${onda.alto}%; --t: ${onda.t}s`}
+        >
+          <path
+            d={trazo(onda.amp)}
+            fill="none"
+            stroke={onda.color}
+            stroke-opacity={onda.op}
+            stroke-width={onda.ancho}
+            stroke-linecap="round"
+            vector-effect="non-scaling-stroke"
+          />
+        </svg>
+      ))
+    }
+  </div>
+  <div class="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:min-h-[85vh] lg:grid-cols-2 lg:py-32">
+    <div class="entrada">
+      <p class="antetitulo">{antetitulo}</p>
       <h1 id="portada-titulo" class="mt-4 text-4xl leading-[1.1] font-bold tracking-tight text-pino sm:text-5xl lg:text-6xl">
         {titulo}
       </h1>
-      <div class="mt-6 max-w-xl text-lg leading-relaxed text-tinta/85 sm:text-xl [&>p]:m-0">
+      <p class="m-0 mt-5 max-w-xl text-2xl leading-snug font-semibold text-balance text-bosque sm:text-3xl">{insight}</p>
+      <div class="mt-5 max-w-xl text-lg leading-relaxed text-texto-cuerpo sm:text-xl [&>p]:m-0">
         <slot />
       </div>
       <div class="mt-8 flex flex-wrap gap-3">
         <a
-          href={`mailto:${correo}`}
+          href={lanzamiento}
           class="rounded-full bg-pino px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-bosque"
         >
-          Escribinos
+          Anotarme al lanzamiento<span class="sr-only">, abre tu correo</span>
         </a>
         <a
-          href="#como-funciona"
-          class="rounded-full border border-pino/25 bg-white px-6 py-3 text-base font-semibold text-pino transition-colors hover:border-bosque hover:text-bosque"
+          href={piloto}
+          class="rounded-full border border-borde-boton-secundario bg-white px-6 py-3 text-base font-semibold text-pino transition-colors hover:border-bosque hover:text-bosque"
         >
-          Ver cómo funciona
+          Sumarme al piloto<span class="sr-only">, abre tu correo</span>
         </a>
       </div>
+      <p class="m-0 mt-4 max-w-xl text-sm text-texto-secundario">
+        Se abre tu correo con el mensaje armado. Si no se abre, escribinos a {correo}.
+      </p>
+      <p class="m-0 mt-4 text-sm">
+        <a href="#como-funciona" class="font-semibold text-bosque underline underline-offset-4 hover:text-pino">Ver cómo funciona</a>
+      </p>
+      <p class="m-0 mt-4">
+        <label for="pausa" class="pausa-etiqueta inline-flex cursor-pointer items-center gap-2 py-1 text-sm font-medium text-texto-secundario">
+          <span class="pausa-caja" aria-hidden="true"></span>
+          Pausar animaciones
+        </label>
+      </p>
     </div>
-    <div class="flex justify-center lg:justify-end">
-      <EjemploConciliacion />
+    <div class="entrada entrada-2 flex justify-center lg:justify-end">
+      <div class="relative w-full max-w-xl">
+        <div class="absolute -inset-4 rounded-3xl bg-pino/5 blur-2xl" aria-hidden="true"></div>
+        <div class="flotar relative">
+          <TarjetaCoincidencias />
+        </div>
+      </div>
     </div>
   </div>
 </section>

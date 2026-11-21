@@ -22,17 +22,17 @@ const datosEstructurados = {
     {
       '@type': 'Organization',
       '@id': `${inicio}#organizacion`,
-      name: 'Cauren',
+      name: 'deQuien',
       url: inicio,
       logo: new URL('/icono-512.png', Astro.site).href,
-      email: 'info@cauren.app',
-      slogan: 'Conectá tus cobros. Ordená tu negocio.',
+      email: 'info@dequien.app',
+      slogan: 'Cuentas claras con quien te paga.',
       areaServed: { '@type': 'Country', name: 'Argentina' },
     },
     {
       '@type': 'WebSite',
       '@id': `${inicio}#sitio`,
-      name: 'Cauren',
+      name: 'deQuien',
       url: inicio,
       inLanguage: 'es-AR',
       publisher: { '@id': `${inicio}#organizacion` },
@@ -52,14 +52,14 @@ const datosEstructurados = {
 
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="es_AR" />
-<meta property="og:site_name" content="Cauren" />
+<meta property="og:site_name" content="deQuien" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={imagen} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Cauren. Conectá tus cobros. Ordená tu negocio." />
+<meta property="og:image:alt" content="deQuien. Cuentas claras con quien te paga." />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
